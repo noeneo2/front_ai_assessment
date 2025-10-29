@@ -1,0 +1,14 @@
+# Dependencias
+node_modules/
+
+# Archivos de build (si usas React, Angular, Vue, etc.)
+build/
+dist/
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+
+# Archivos de entorno
+.env
+.env.local
