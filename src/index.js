@@ -12,6 +12,8 @@ import Home from './views/home'
 import Page from './views/page'
 import Page1 from './views/page1'
 import NotFound from './views/not-found'
+import Subiendo from './views/subiendo'
+import Cargando from './views/cargando'
 
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
         <Route component={Page} exact path="/page" />
         <Route component={Page1} exact path="/page1" />
         <Route component={NotFound} path="**" />
+        <Route component={Subiendo} exact path="/subiendo" />
+        <Route component={Cargando} exact path="/cargando" />
         <Redirect to="**" />
       </Switch>
     </Router>
