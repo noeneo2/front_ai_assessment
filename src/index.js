@@ -22,9 +22,9 @@ const App = () => {
         <Route component={Home} exact path="/" />
         <Route component={Page} exact path="/page" />
         <Route component={Page1} exact path="/page1" />
-        <Route component={NotFound} path="**" />
         <Route component={Subiendo} exact path="/subiendo" />
         <Route component={Cargando} exact path="/cargando" />
+        <Route component={NotFound} path="**" />
         <Redirect to="**" />
       </Switch>
     </Router>
