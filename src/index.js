@@ -8,20 +8,20 @@ import {
 } from 'react-router-dom'
 
 import './style.css'
-import Home from './views/home'
-import Page from './views/page'
-import Page1 from './views/page1'
-import NotFound from './views/not-found'
+import Recom from './views/recom'
+import Dashboard from './views/dashboard'
+import Landing from './views/landing'
 import Subiendo from './views/subiendo'
 import Cargando from './views/cargando'
+import NotFound from './views/not-found'
 
 const App = () => {
   return (
     <Router>
       <Switch>
-        <Route component={Home} exact path="/" />
-        <Route component={Page} exact path="/page" />
-        <Route component={Page1} exact path="/page1" />
+        <Route component={Recom} exact path="/recomendaciones" />
+        <Route component={Dashboard} exact path="/dashboard" />
+        <Route component={Landing} exact path="/" />
         <Route component={Subiendo} exact path="/subiendo" />
         <Route component={Cargando} exact path="/cargando" />
         <Route component={NotFound} path="**" />

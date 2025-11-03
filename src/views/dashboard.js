@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Helmet } from 'react-helmet'
 
-import './home.css'
+import './dashboard.css'
 
-const Home = (props) => {
+const Dashboard = (props) => {
   return (
     <div className="home-container1">
       <Helmet>
@@ -651,4 +651,4 @@ const Home = (props) => {
   )
 }
 
-export default Home
+export default Dashboard
