@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Helmet } from 'react-helmet'
 
-import './page1.css'
+import './landing.css'
 
-const Page1 = (props) => {
+const Landing = (props) => {
   return (
     <div className="page1-container1">
       <Helmet>
@@ -59,7 +59,7 @@ const Page1 = (props) => {
             <div className="page1-upload-module">
               <div className="page1-title">
                 <span className="page1-text1">
-                  Transforma tu excel en un dashboard de Madurez Organizacional
+                  Transforma tu excel en un dashboard deMadurez Organizacional
                   en Gen AI
                 </span>
               </div>
@@ -163,4 +163,4 @@ const Page1 = (props) => {
   )
 }
 
-export default Page1
+export default Landing
