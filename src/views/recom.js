@@ -1,15 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { Helmet } from 'react-helmet';
 
-import { Helmet } from 'react-helmet'
-
-import './recom.css'
+import { ReportContext } from '../context/ReportContext';
+import './recom.css';
 
 const Recom = (props) => {
+  const { report } = useContext(ReportContext);
+
+  // Simple loading state while waiting for the report
+  if (!report || !report.recommendations) {
+    return (
+      <div className='recom-container1' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <h1>Cargando recomendaciones...</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="recom-container1">
       <Helmet>
-        <title>Recom - Blond Relieved Barracuda</title>
-        <meta property="og:title" content="Recom - Blond Relieved Barracuda" />
+        <title>Recomendaciones - Madurez Organizacional Gen AI</title>
       </Helmet>
       <div className="recom-dashboard-recommendations">
         <div className="recom-content">
@@ -123,7 +133,7 @@ const Recom = (props) => {
                             className="recom-iconbulb"
                           />
                           <span className="recom-text24">
-                            3 iniciativas recomendadas
+                            {report.recommendations.length} iniciativas recomendadas
                           </span>
                         </div>
                         <div className="recom-frame13213168451">
@@ -133,14 +143,7 @@ const Recom = (props) => {
                             className="recom-iconcalendarminus1"
                           />
                           <span className="recom-text25">
-                            <span className="recom-text26">
-                              Tiempo estimado:
-                              <span
-                                dangerouslySetInnerHTML={{
-                                  __html: ' ',
-                                }}
-                              />
-                            </span>
+                            <span className="recom-text26">Tiempo estimado: </span>
                             <span>2-3 meses</span>
                           </span>
                         </div>
@@ -148,152 +151,44 @@ const Recom = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="recom-card-recommendation1">
-                  <div className="recom-number-card10">
-                    <span className="recom-text28">
-                      Implementar modelo operativo AI-first en toda la
-                      organización
-                    </span>
-                    <div className="recom-frame13213168491">
-                      <div className="recom-frame13213168481">
-                        <span className="recom-text29">
-                          Redefinir estructuras organizacionales para poner Gen
-                          AI en el centro de la operación, con roles dedicados y
-                          reportes claros.
-                        </span>
-                        <div className="recom-frame13213168521">
-                          <div className="recom-frame13213168452">
-                            <img
-                              src="/external/iconcalendarminusi461-vuk.svg"
-                              alt="IconcalendarminusI461"
-                              className="recom-iconcalendarminus2"
-                            />
-                            <span className="recom-text30">
-                              <span className="recom-text31">
-                                Tiempo estimado:
-                                <span
-                                  dangerouslySetInnerHTML={{
-                                    __html: ' ',
-                                  }}
-                                />
+
+                {/* Recommendations mapped from context */}
+                {report.recommendations.map((rec, index) => (
+                  <div className="recom-card-recommendation1" key={index}>
+                    <div className="recom-number-card10">
+                      <span className="recom-text28">{rec.title}</span>
+                      <div className="recom-frame13213168491">
+                        <div className="recom-frame13213168481">
+                          <span className="recom-text29">{rec.description}</span>
+                          <div className="recom-frame13213168521">
+                            <div className="recom-frame13213168452">
+                              <img
+                                src="/external/iconcalendarminusi461-vuk.svg"
+                                alt="IconcalendarminusI461"
+                                className="recom-iconcalendarminus2"
+                              />
+                              <span className="recom-text30">
+                                <span className="recom-text31">Tiempo estimado: </span>
+                                <span>{rec.estimated_time}</span>
                               </span>
-                              <span>5 semanas</span>
-                            </span>
-                          </div>
-                          <div className="recom-frame13213168301">
-                            <span className="recom-text33">Prioridad alta</span>
+                            </div>
+                            <div className="recom-frame13213168301">
+                              <span className="recom-text33">{rec.priority}</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="recom-toggle1">
-                        <div className="recom-switch1">
-                          <div className="recom-circle1"></div>
+                        <div className="recom-toggle1">
+                          <div className="recom-switch1">
+                            <div className="recom-circle1"></div>
+                          </div>
+                          <span className="recom-text34">Incluir en simulación</span>
                         </div>
-                        <span className="recom-text34">
-                          Incluir en simulación
-                        </span>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="recom-card-recommendation2">
-                  <div className="recom-number-card11">
-                    <span className="recom-text35">
-                      Establecer plataforma unificada de Gen AI con LLMOps
-                      completo
-                    </span>
-                    <div className="recom-frame13213168492">
-                      <div className="recom-frame13213168482">
-                        <span className="recom-text36">
-                          Consolidar herramientas, prompts, RAG y fine-tuning en
-                          una plataforma única con CI/CD, monitoreo y
-                          autoscaling.
-                        </span>
-                        <div className="recom-frame13213168522">
-                          <div className="recom-frame13213168453">
-                            <img
-                              src="/external/iconcalendarminusi461-styp.svg"
-                              alt="IconcalendarminusI461"
-                              className="recom-iconcalendarminus3"
-                            />
-                            <span className="recom-text37">
-                              <span className="recom-text38">
-                                Tiempo estimado:
-                                <span
-                                  dangerouslySetInnerHTML={{
-                                    __html: ' ',
-                                  }}
-                                />
-                              </span>
-                              <span>4-5 semanas</span>
-                            </span>
-                          </div>
-                          <div className="recom-frame13213168302">
-                            <span className="recom-text40">
-                              Prioridad media
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="recom-toggle2">
-                        <div className="recom-switch2">
-                          <div className="recom-circle2"></div>
-                        </div>
-                        <span className="recom-text41">
-                          Incluir en simulación
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="recom-card-recommendation3">
-                  <div className="recom-number-card12">
-                    <span className="recom-text42">
-                      Lanzar nuevos productos/servicios habilitados por Gen AI
-                    </span>
-                    <div className="recom-frame13213168493">
-                      <div className="recom-frame13213168483">
-                        <span className="recom-text43">
-                          Identificar oportunidades de mercado y desarrollar
-                          MVPs de productos que aprovechen capacidades de Gen
-                          AI.
-                        </span>
-                        <div className="recom-frame13213168523">
-                          <div className="recom-frame13213168454">
-                            <img
-                              src="/external/iconcalendarminusi461-ergh.svg"
-                              alt="IconcalendarminusI461"
-                              className="recom-iconcalendarminus4"
-                            />
-                            <span className="recom-text44">
-                              <span className="recom-text45">
-                                Tiempo estimado:
-                                <span
-                                  dangerouslySetInnerHTML={{
-                                    __html: ' ',
-                                  }}
-                                />
-                              </span>
-                              <span>1-2 meses</span>
-                            </span>
-                          </div>
-                          <div className="recom-frame13213168303">
-                            <span className="recom-text47">Prioridad alta</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="recom-toggle3">
-                        <div className="recom-switch3">
-                          <div className="recom-circle3"></div>
-                        </div>
-                        <span className="recom-text48">
-                          Incluir en simulación
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="recom-scores-categories">
+                ))}
+
+                <div className="recom-scores-categories">{/*...Rest of the JSX remains the same...*/}
                   <div className="recom-container3">
                     <div className="recom-frame1321316851">
                       <img
@@ -422,7 +317,7 @@ const Recom = (props) => {
               </div>
             </div>
           </div>
-          <div className="recom-footer">
+          <div className="recom-footer">{/*...Footer remains the same...*/}
             <div className="recom-page-links">
               <div className="recom-logos">
                 <div className="recom-logo">
@@ -473,34 +368,8 @@ const Recom = (props) => {
           </div>
         </div>
       </div>
-      <a href="https://play.teleporthq.io/signup" className="recom-link">
-        <div aria-label="Sign up to TeleportHQ" className="recom-container4">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 19 21"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="recom-icon1"
-          >
-            <path
-              d="M9.1017 4.64355H2.17867C0.711684 4.64355 -0.477539 5.79975 -0.477539 7.22599V13.9567C-0.477539 15.3829 0.711684 16.5391 2.17867 16.5391H9.1017C10.5687 16.5391 11.7579 15.3829 11.7579 13.9567V7.22599C11.7579 5.79975 10.5687 4.64355 9.1017 4.64355Z"
-              fill="#B23ADE"
-            ></path>
-            <path
-              d="M10.9733 12.7878C14.4208 12.7878 17.2156 10.0706 17.2156 6.71886C17.2156 3.3671 14.4208 0.649963 10.9733 0.649963C7.52573 0.649963 4.73096 3.3671 4.73096 6.71886C4.73096 10.0706 7.52573 12.7878 10.9733 12.7878Z"
-              fill="#FF5C5C"
-            ></path>
-            <path
-              d="M17.7373 13.3654C19.1497 14.1588 19.1497 15.4634 17.7373 16.2493L10.0865 20.5387C8.67402 21.332 7.51855 20.6836 7.51855 19.0968V10.5141C7.51855 8.92916 8.67402 8.2807 10.0865 9.07221L17.7373 13.3654Z"
-              fill="#2874DE"
-            ></path>
-          </svg>
-          <span className="recom-text71">Built in TeleportHQ</span>
-        </div>
-      </a>
     </div>
-  )
-}
+  );
+};
 
-export default Recom
+export default Recom;

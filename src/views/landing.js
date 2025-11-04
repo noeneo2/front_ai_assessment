@@ -1,63 +1,30 @@
+
 import React, { useContext, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
-import * as XLSX from 'xlsx';
 
 import { ReportContext } from '../context/ReportContext';
 import './landing.css';
 
 const Landing = (props) => {
-  const { setReportData, setLoading } = useContext(ReportContext);
+  const { setFile, setFileName } = useContext(ReportContext);
   const navigate = useNavigate();
+  
   const fileInputRef = useRef(null);
 
-  const handleFile = (event) => {
-    const file = event.target.files[0];
-    if (!file) {
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (!selectedFile) {
       return;
     }
 
-    setLoading(true);
-    const reader = new FileReader();
+    setFile(selectedFile);
+    setFileName(selectedFile.name);
 
-    reader.onload = (e) => {
-      try {
-        const data = e.target.result;
-        const workbook = XLSX.read(data, { type: 'binary' });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const json = XLSX.utils.sheet_to_json(worksheet);
-
-        // --- Basic Processing ---
-        // TODO: Replace this with your actual data processing logic
-        console.log("Datos del Excel:", json);
-        
-        // Example: Assume we calculate a score and generate recommendations
-        const processedData = {
-          score: (Math.random() * 4 + 1).toFixed(2), // Random score between 1 and 5
-          recommendations: [
-            "Implementar un repositorio central de datos.",
-            "Capacitar al equipo en herramientas de IA.",
-            "Definir KPIs claros para proyectos de Gen AI.",
-          ],
-          rawData: json,
-        };
-        
-        setReportData(processedData);
-        navigate('/subiendo');
-
-      } catch (error) {
-        console.error("Error processing file:", error);
-        alert("Hubo un error al procesar el archivo. Asegúrate de que sea un Excel válido.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    reader.readAsBinaryString(file);
+    navigate('/subiendo');
   };
 
-  const handleUploadClick = () => {
+  const handleUploadAreaClick = () => {
     fileInputRef.current.click();
   };
 
@@ -65,21 +32,26 @@ const Landing = (props) => {
     <div className="page1-container1">
       <Helmet>
         <title>Subir Excel - Madurez Organizacional Gen AI</title>
-        <meta property="og:title" content="Subir Excel - Madurez Organizacional Gen AI" />
       </Helmet>
       
-      {/* Hidden file input */}
       <input 
         type="file" 
         ref={fileInputRef} 
-        onChange={handleFile}
+        onChange={handleFileChange}
         style={{ display: 'none' }}
         accept=".xlsx, .xls"
       />
 
       <div className="page1-landing-page">
         <div className="page1-content">
-          <div className="page1-header">{/* Header content remains the same */}</div>
+          <div className="page1-header">
+            <img
+              className="page1-header-logo"
+              src="/external/Logo_negro_NEO_header.svg"
+              alt="Logo Neo"
+            />
+          </div>
+          
           <div className="page1-main-content">
             <div className="page1-upload-module">
               <div className="page1-title">
@@ -87,16 +59,16 @@ const Landing = (props) => {
                   Transforma tu excel en un dashboard de Madurez Organizacional en Gen AI
                 </span>
               </div>
-              {/* This entire div is now clickable */}
-              <div className="page1-upload" onClick={handleUploadClick} style={{cursor: 'pointer'}}>
+              
+              <div className="page1-upload" onClick={handleUploadAreaClick} style={{cursor: 'pointer'}}>
+                
                 <div className="page1-frame17">
-                  <div className="page1-group3">{/* Icon remains the same */}</div>
+                  <div className="page1-group3">
+                    <img alt="VectorI281" src="/external/vectori281-d2v4.svg" className="page1-vector001"/>
+                  </div>
                   <div className="page1-frame16">
                     <span className="page1-text2">
                       Seleccione un archivo o arrástrelo aquí.
-                    </span>
-                    <span className="page1-text3">
-                      Archivo de Excel de hasta 50 MB
                     </span>
                   </div>
                   <div className="page1-frame15">
@@ -106,7 +78,15 @@ const Landing = (props) => {
               </div>
             </div>
           </div>
-          <div className="page1-footer">{/* Footer content remains the same */}</div>
+          
+          <div className="page1-footer">
+            <img
+            className="page1-footer-logo"
+            src="/external/Logo_negro_NEO_footer.svg"
+            alt="Logo Neo"
+            />
+
+          </div>
         </div>
       </div>
     </div>

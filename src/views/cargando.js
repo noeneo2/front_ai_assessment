@@ -1,127 +1,82 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-import { Helmet } from 'react-helmet'
-
-import './cargando.css'
+import { ReportContext } from '../context/ReportContext';
+import './cargando.css';
 
 const Cargando = (props) => {
+  const { file, setReportData, setIsLoading, setError } = useContext(ReportContext);
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (!file) {
+      navigate('/');
+      return;
+    }
+
+    const processFile = async () => {
+      setIsLoading(true);
+      setError(null);
+      setErrorMessage('');
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/process-excel/', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        setReportData(response.data);
+        
+        navigate('/dashboard');
+
+      } catch (err) {
+        console.error("Error al procesar el archivo:", err);
+        setError(err);
+        setErrorMessage('Hubo un error al procesar tu archivo. Por favor, inténtalo de nuevo.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    processFile();
+  }, [file, navigate, setError, setIsLoading, setReportData]);
+
   return (
     <div className="page1-container1">
       <Helmet>
-        <title>Page1 - Blond Relieved Barracuda</title>
-        <meta property="og:title" content="Page1 - Blond Relieved Barracuda" />
+        <title>Procesando - Madurez Organizacional Gen AI</title>
       </Helmet>
       <div className="page1-cargando">
         <div className="page1-content">
-          <div className="page1-header">
-            <div className="page1-div">
-              <div className="page1-logonegro-neo11">
-                <div className="page1-clippathgroup1">
-                  <div className="page1-clip05707104601">
-                    <img
-                      src="/external/vectori281-shv.svg"
-                      alt="VectorI281"
-                      className="page1-vector10"
-                    />
-                  </div>
-                  <div className="page1-group1">
-                    <img
-                      src="/external/vectori281-8go5.svg"
-                      alt="VectorI281"
-                      className="page1-vector11"
-                    />
-                    <img
-                      src="/external/vectori281-x6nk.svg"
-                      alt="VectorI281"
-                      className="page1-vector12"
-                    />
-                    <img
-                      src="/external/vectori281-pdhs.svg"
-                      alt="VectorI281"
-                      className="page1-vector13"
-                    />
-                    <img
-                      src="/external/vectori281-ma7.svg"
-                      alt="VectorI281"
-                      className="page1-vector14"
-                    />
-                    <img
-                      src="/external/vectori281-iozq.svg"
-                      alt="VectorI281"
-                      className="page1-vector15"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="page1-header"></div>
           <div className="page1-main-content">
             <div className="page1-upload-module">
               <div className="page1-title">
                 <span className="page1-text1">
-                  Creando las visualizaciones de datos y recomendaciones...
+                  {errorMessage ? errorMessage : 'Creando las visualizaciones de datos y recomendaciones...'}
                 </span>
               </div>
-              <img
-                src="/external/loadinganimation12812-96i-400h.png"
-                alt="LoadingAnimation12812"
-                className="page1-loading-animation1"
-              />
+              {!errorMessage && (
+                <img
+                  src="/external/loadinganimation12812-96i-400h.png"
+                  alt="Animación de carga"
+                  className="page1-loading-animation1"
+                />
+              )}
             </div>
           </div>
-          <div className="page1-footer">
-            <div className="page1-page-links">
-              <div className="page1-logos">
-                <div className="page1-logo">
-                  <div className="page1-logonegro-neo12">
-                    <div className="page1-clippathgroup2">
-                      <div className="page1-clip05707104602">
-                        <img
-                          src="/external/vectori281-745j.svg"
-                          alt="VectorI281"
-                          className="page1-vector16"
-                        />
-                      </div>
-                      <div className="page1-group2">
-                        <img
-                          src="/external/vectori281-x7bc.svg"
-                          alt="VectorI281"
-                          className="page1-vector17"
-                        />
-                        <img
-                          src="/external/vectori281-pz74.svg"
-                          alt="VectorI281"
-                          className="page1-vector18"
-                        />
-                        <img
-                          src="/external/vectori281-7vb4.svg"
-                          alt="VectorI281"
-                          className="page1-vector19"
-                        />
-                        <img
-                          src="/external/vectori281-rnt6.svg"
-                          alt="VectorI281"
-                          className="page1-vector20"
-                        />
-                        <img
-                          src="/external/vectori281-zim.svg"
-                          alt="VectorI281"
-                          className="page1-vector21"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="page1-footer-link-column">
-                <span className="page1-text2">Neo Consulting. 2025</span>
-              </div>
-            </div>
-          </div>
+          <div className="page1-footer"></div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Cargando
+export default Cargando;
