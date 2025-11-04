@@ -55,7 +55,13 @@ const Cargando = (props) => {
       </Helmet>
       <div className="page1-cargando">
         <div className="page1-content">
-        <div className="page1-header"></div>
+        <div className="page1-header">
+          <img
+              className="page1-header-logo"
+              src="/external/Logo_negro_NEO_header.svg"
+              alt="Logo Neo"
+            />
+        </div>
           <div className="page1-main-content">
             <div className="page1-upload-module">
               <div className="page1-title">
@@ -72,7 +78,13 @@ const Cargando = (props) => {
               )}
             </div>
           </div>
-          <div className="page1-footer"></div>
+          <div className="page1-footer">
+            <img
+            className="page1-footer-logo"
+            src="/external/Logo_negro_NEO_footer.svg"
+            alt="Logo Neo"
+            />
+          </div>
         </div>
       </div>
     </div>

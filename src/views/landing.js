@@ -1,4 +1,3 @@
-
 import React, { useContext, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
@@ -44,15 +43,17 @@ const Landing = (props) => {
 
       <div className="page1-landing-page">
         <div className="page1-content">
-          <div className="page1-header">
+
+          <header className="page1-header">
             <img
               className="page1-header-logo"
               src="/external/Logo_negro_NEO_header.svg"
               alt="Logo Neo"
             />
-          </div>
+          </header>
           
-          <div className="page1-main-content">
+
+          <main className="page1-main-content">
             <div className="page1-upload-module">
               <div className="page1-title">
                 <span className="page1-text1">
@@ -77,16 +78,18 @@ const Landing = (props) => {
                 </div>
               </div>
             </div>
-          </div>
+          </main>
           
-          <div className="page1-footer">
+
+          <footer className="page1-footer">
             <img
             className="page1-footer-logo"
             src="/external/Logo_negro_NEO_footer.svg"
             alt="Logo Neo"
             />
+          </footer>
 
-          </div>
+
         </div>
       </div>
     </div>
