@@ -14,9 +14,6 @@
   overflow: hidden;
   align-items: flex-start;
   flex-shrink: 0;
-  border-color: rgba(0, 0, 0, 1);
-  border-style: solid;
-  border-width: 2px;
   flex-direction: column;
   background-color: rgba(255, 255, 255, 1);
 }
@@ -49,7 +46,7 @@
 }
  
 .recom-header-frame {
-  gap: 766px;
+  
   display: flex;
   align-self: stretch;
   align-items: flex-start;
@@ -215,9 +212,8 @@
 }
  
 .recom-sidebar {
-  gap: 202px;
-  width: 400px;
   display: flex;
+  flex: 0 0 265px;
   overflow: hidden;
   align-items: flex-start;
   flex-shrink: 0;
@@ -226,6 +222,7 @@
  
 .recom-side-panel-menu {
   display: flex;
+  padding-right: 25px;
   padding: 16px 0;
   overflow: hidden;
   align-self: stretch;
@@ -284,13 +281,12 @@
  
 .recom-main-content2 {
   gap: 40px;
-  width: 896px;
+  width: 100%;
   display: flex;
   padding: 0 0 64px;
   overflow: hidden;
   flex-grow: 1;
   align-items: flex-start;
-  flex-shrink: 0;
   flex-direction: column;
 }
  
@@ -330,7 +326,7 @@
  
 .recom-frame1321316840 {
   gap: 32px;
-  width: 832px;
+  width: 100%;
   display: flex;
   flex-grow: 1;
   align-items: flex-start;
@@ -545,18 +541,22 @@
   font-weight: 400;
 }
  
-.recom-card-recommendation1 {
+.recom-card-recommendation1, 
+.recom-card-recommendation2,
+.recom-card-recommendation3 {
   gap: 24px;
-  width: 896px;
+    
   height: 172px;
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
  
-.recom-number-card10 {
+.recom-number-card10,
+.recom-number-card11,
+.recom-number-card12  {
   gap: 16px;
-  width: 896px;
+  width:100%;
   display: flex;
   padding: 24px;
   overflow: hidden;
@@ -585,21 +585,25 @@
   text-decoration: none;
 }
  
-.recom-frame13213168491 {
+.recom-frame13213168491,
+.recom-frame13213168492,
+.recom-frame13213168493 {
   gap: 40px;
+  width:100%;
   display: flex;
   align-self: stretch;
   align-items: flex-end;
   flex-shrink: 0;
 }
  
-.recom-frame13213168481 {
+.recom-frame13213168481,
+.recom-frame13213168482,
+.recom-frame13213168483 {
   gap: 16px;
-  width: 609px;
+  width:100%;
   display: flex;
   flex-grow: 1;
   align-items: flex-start;
-  flex-shrink: 0;
   flex-direction: column;
 }
  
@@ -716,33 +720,7 @@
   font-stretch: normal;
   text-decoration: none;
 }
- 
-.recom-card-recommendation2 {
-  gap: 24px;
-  width: 896px;
-  height: 172px;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
- 
-.recom-number-card11 {
-  gap: 16px;
-  width: 896px;
-  display: flex;
-  padding: 24px;
-  overflow: hidden;
-  flex-grow: 1;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-color: rgba(0, 0, 51, 1);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 8px;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 1);
-}
- 
+
 .recom-text35 {
   color: var(--dl-color-default-neoblue);
   height: auto;
@@ -756,24 +734,7 @@
   font-stretch: normal;
   text-decoration: none;
 }
- 
-.recom-frame13213168492 {
-  gap: 40px;
-  display: flex;
-  align-self: stretch;
-  align-items: flex-end;
-  flex-shrink: 0;
-}
- 
-.recom-frame13213168482 {
-  gap: 16px;
-  width: 609px;
-  display: flex;
-  flex-grow: 1;
-  align-items: flex-start;
-  flex-shrink: 0;
-  flex-direction: column;
-}
+
  
 .recom-text36 {
   color: var(--dl-color-default-neoblue);
@@ -888,33 +849,7 @@
   font-stretch: normal;
   text-decoration: none;
 }
- 
-.recom-card-recommendation3 {
-  gap: 24px;
-  width: 896px;
-  height: 172px;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
- 
-.recom-number-card12 {
-  gap: 16px;
-  width: 896px;
-  display: flex;
-  padding: 24px;
-  overflow: hidden;
-  flex-grow: 1;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-color: rgba(0, 0, 51, 1);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 8px;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 1);
-}
- 
+
 .recom-text42 {
   color: var(--dl-color-default-neoblue);
   height: auto;
@@ -927,24 +862,6 @@
   line-height: 24px;
   font-stretch: normal;
   text-decoration: none;
-}
- 
-.recom-frame13213168493 {
-  gap: 40px;
-  display: flex;
-  align-self: stretch;
-  align-items: flex-end;
-  flex-shrink: 0;
-}
- 
-.recom-frame13213168483 {
-  gap: 16px;
-  width: 609px;
-  display: flex;
-  flex-grow: 1;
-  align-items: flex-start;
-  flex-shrink: 0;
-  flex-direction: column;
 }
  
 .recom-text43 {
@@ -1076,7 +993,9 @@
  
 .recom-container3 {
   gap: 24px;
+  width: 100%;
   display: flex;
+  overflow: hidden;
   align-self: stretch;
   align-items: flex-start;
   flex-direction: column;
@@ -1111,6 +1030,7 @@
  
 .recom-frame1321316812 {
   gap: 8px;
+  width:100%;
   display: flex;
   align-self: stretch;
   align-items: flex-start;
@@ -1119,7 +1039,7 @@
  
 .recom-frame13213168151 {
   gap: 8px;
-  width: 832px;
+  width: 100%;
   display: flex;
   flex-grow: 1;
   align-items: flex-start;
@@ -1129,11 +1049,12 @@
 }
  
 .recom-frame1321316813 {
+  width:100%;
+  max-width: 100%;
   gap: 8px;
   display: flex;
   align-self: stretch;
   align-items: center;
-  flex-shrink: 0;
 }
  
 .recom-card-sub-score1 {
@@ -1145,11 +1066,10 @@
  
 .recom-number-card13 {
   gap: 16px;
-  width: 202px;
   display: flex;
-  padding: 24px;
+  padding: 15px;
   overflow: hidden;
-  flex-grow: 1;
+  flex: 1 1 22%;
   align-items: flex-start;
   flex-shrink: 0;
   border-radius: 8px;
@@ -1232,11 +1152,10 @@
  
 .recom-number-card14 {
   gap: 16px;
-  width: 202px;
   display: flex;
-  padding: 24px;
+  padding: 15px;
   overflow: hidden;
-  flex-grow: 1;
+  flex: 1 1 22%;
   align-items: flex-start;
   flex-shrink: 0;
   border-radius: 8px;
@@ -1296,11 +1215,10 @@
  
 .recom-number-card15 {
   gap: 16px;
-  width: 202px;
   display: flex;
-  padding: 24px;
+  padding: 15px;
   overflow: hidden;
-  flex-grow: 1;
+  flex: 1 1 22%;
   align-items: flex-start;
   flex-shrink: 0;
   border-radius: 8px;
@@ -1383,11 +1301,10 @@
  
 .recom-number-card16 {
   gap: 16px;
-  width: 202px;
   display: flex;
-  padding: 24px;
+  padding: 15px;
   overflow: hidden;
-  flex-grow: 1;
+  flex: 1 1 22%;
   align-items: flex-start;
   flex-shrink: 0;
   border-radius: 8px;
@@ -1492,11 +1409,10 @@
  
 .recom-number-card17 {
   gap: 16px;
-  width: 202px;
   display: flex;
-  padding: 24px;
+  padding: 15px;
   overflow: hidden;
-  flex-grow: 1;
+  flex: 1 1 22%;
   align-items: flex-start;
   flex-shrink: 0;
   border-radius: 8px;
@@ -1579,11 +1495,10 @@
  
 .recom-number-card18 {
   gap: 16px;
-  width: 202px;
   display: flex;
-  padding: 24px;
+  padding: 15px;
   overflow: hidden;
-  flex-grow: 1;
+  flex: 1 1 22%;
   align-items: flex-start;
   flex-shrink: 0;
   border-radius: 8px;
@@ -1659,7 +1574,6 @@
  
 .recom-frame13213168152 {
   gap: 16px;
-  height: 128px;
   display: flex;
   flex-grow: 1;
   align-items: center;
@@ -1675,11 +1589,10 @@
  
 .recom-number-card19 {
   gap: 16px;
-  width: 412px;
   display: flex;
-  padding: 24px;
+  padding: 15px;
   overflow: hidden;
-  flex-grow: 1;
+  flex: 1 1 44%;
   align-items: flex-start;
   flex-shrink: 0;
   border-radius: 8px;

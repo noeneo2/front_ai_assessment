@@ -14,9 +14,6 @@
   overflow: hidden;
   align-items: flex-start;
   flex-shrink: 0;
-  border-color: rgba(0, 0, 0, 1);
-  border-style: solid;
-  border-width: 2px;
   flex-direction: column;
   background-color: rgba(255, 255, 255, 1);
 }
@@ -49,7 +46,6 @@
 }
  
 .home-header-frame {
-  gap: 766px;
   display: flex;
   align-self: stretch;
   align-items: flex-start;
@@ -207,16 +203,18 @@
  
 .home-container2 {
   gap: 48px;
+  width: 100%;
   display: flex;
   overflow: hidden;
   align-self: stretch;
   align-items: flex-start;
   flex-shrink: 0;
+  
 }
  
 .home-sidebar {
-  width: 400px;
   display: flex;
+  flex: 0 0 265px;
   overflow: hidden;
   align-items: flex-start;
   flex-shrink: 0;
@@ -225,7 +223,8 @@
  
 .home-side-panel-menu {
   display: flex;
-  padding: 16px 0;
+  padding-top: 16px;
+  padding-bottom: 16px;
   overflow: hidden;
   align-self: stretch;
   align-items: flex-start;
@@ -283,14 +282,12 @@
  
 .home-main-content2 {
   gap: 40px;
-  width: 896px;
+  width: 100%;
   display: flex;
   padding: 0 0 64px;
   overflow: hidden;
-  position: relative;
   flex-grow: 1;
   align-items: flex-start;
-  flex-shrink: 0;
   flex-direction: column;
 }
  
@@ -688,18 +685,6 @@
   flex-grow: 1;
 }
  
-.home-rectangle4 {
-  top: 1px;
-  left: 496px;
-  width: 70px;
-  height: 335px;
-  z-index: 4;
-  position: absolute;
-  border-color: rgba(0, 0, 51, 1);
-  border-style: solid;
-  border-width: 1px;
-}
- 
 .home-vector1 {
   top: 1px;
   left: 308px;
@@ -707,19 +692,6 @@
   height: 335px;
   z-index: 5;
   position: absolute;
-}
- 
-.home-ellipse4 {
-  top: 194px;
-  left: 523px;
-  width: 16px;
-  height: 16px;
-  z-index: 6;
-  position: absolute;
-  box-sizing: content-box;
-  border-color: rgba(0, 0, 51, 0.20000000298023224);
-  border-style: solid;
-  border-width: 4px;
 }
  
 .home-tooltip {
@@ -853,21 +825,29 @@
   text-decoration: none;
 }
  
-.home-frame1321316812 {
+.home-frame-cards-all {
   gap: 16px;
   display: flex;
+  flex-direction: column;
   align-self: stretch;
   align-items: flex-start;
   flex-shrink: 0;
 }
- 
-.home-frame1321316815 {
+
+.home-frame-cards-row{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
   gap: 16px;
-  width: 896px;
+}
+ 
+.home-frame-cards1 {
+  gap: 16px;
+  width: 100%;
   display: flex;
   flex-grow: 1;
   align-items: flex-start;
-  flex-shrink: 0;
+  /*flex-shrink: 0;*/
   flex-direction: column;
   justify-content: center;
 }
@@ -887,10 +867,16 @@
   align-items: center;
 }
  
-.home-number-card1 {
+.home-number-card1,
+.home-number-card2,
+.home-number-card3,
+.home-number-card4,
+.home-number-card5,
+.home-number-card6 {
+
   gap: 16px;
-  width: 288px;
   display: flex;
+  flex: 0 0 30%;
   padding: 24px;
   overflow: hidden;
   flex-grow: 1;
@@ -991,23 +977,6 @@
   align-items: center;
 }
  
-.home-number-card2 {
-  gap: 16px;
-  width: 288px;
-  display: flex;
-  padding: 24px;
-  overflow: hidden;
-  flex-grow: 1;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-color: rgba(0, 0, 51, 1);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 8px;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 1);
-}
- 
 .home-text39 {
   color: var(--dl-color-default-neoblue);
   height: auto;
@@ -1095,23 +1064,6 @@
   align-items: center;
 }
  
-.home-number-card3 {
-  gap: 16px;
-  width: 288px;
-  display: flex;
-  padding: 24px;
-  overflow: hidden;
-  flex-grow: 1;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-color: rgba(0, 0, 51, 1);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 8px;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 1);
-}
- 
 .home-text43 {
   color: var(--dl-color-default-neoblue);
   height: auto;
@@ -1192,7 +1144,7 @@
   text-decoration: none;
 }
  
-.home-frame1321316814 {
+.home-frame-cards2 {
   gap: 16px;
   display: flex;
   align-self: stretch;
@@ -1205,23 +1157,6 @@
   display: flex;
   flex-grow: 1;
   align-items: center;
-}
- 
-.home-number-card4 {
-  gap: 16px;
-  width: 288px;
-  display: flex;
-  padding: 24px;
-  overflow: hidden;
-  flex-grow: 1;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-color: rgba(0, 0, 51, 1);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 8px;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 1);
 }
  
 .home-text47 {
@@ -1311,23 +1246,6 @@
   align-items: center;
 }
  
-.home-number-card5 {
-  gap: 16px;
-  width: 288px;
-  display: flex;
-  padding: 24px;
-  overflow: hidden;
-  flex-grow: 1;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-color: rgba(0, 0, 51, 1);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 8px;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 1);
-}
- 
 .home-text51 {
   color: var(--dl-color-default-neoblue);
   height: auto;
@@ -1414,24 +1332,7 @@
   flex-grow: 1;
   align-items: center;
 }
- 
-.home-number-card6 {
-  gap: 16px;
-  width: 288px;
-  display: flex;
-  padding: 24px;
-  overflow: hidden;
-  flex-grow: 1;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-color: rgba(0, 0, 51, 1);
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 8px;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 1);
-}
- 
+
 .home-text55 {
   color: var(--dl-color-default-neoblue);
   height: auto;
@@ -2806,7 +2707,13 @@
   flex-direction: column;
   background-color: rgba(255, 255, 255, 1);
 }
- 
+
+.home-footer-logo{
+  height: 16px;
+  width: 54px;  
+  object-fit: contain;
+}
+
 .home-page-links {
   gap: 48px;
   display: flex;
@@ -2982,4 +2889,56 @@
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
+}
+
+/* --- Awareness y Exploración --- */
+.home-ellipse4.categoria-awareness-exploracion {
+  top: 20px;
+  left: 25px;
+}
+
+/* --- Estrategia, Adopción e Integración --- */
+.home-ellipse4.categoria-estrategia-adopcion-e-integracion {
+  top: 60px;
+  left: 65px;
+}
+
+/* --- Escalamiento y Optimización --- */
+.home-ellipse4.categoria-escalamiento-y-optimizacion {
+  top: 100px;
+  left: 105px;
+}
+
+/* --- Transformación --- */
+.home-ellipse4.categoria-transformacion {
+  top: 140px;
+  left: 145px;
+}
+
+
+
+.home-ellipse4 {
+  top: 194px;
+  left: 523px;
+  width: 16px;
+  height: 16px;
+  z-index: 6;
+  position: absolute;
+  box-sizing: content-box;
+  border-color: rgba(0, 0, 51, 0.20000000298023224);
+  border-style: solid;
+  border-width: 4px;
+}
+
+
+.home-rectangle4 {
+  top: 1px;
+  left: 496px;
+  width: 70px;
+  height: 335px;
+  z-index: 4;
+  position: absolute;
+  border-color: rgba(0, 0, 51, 1);
+  border-style: solid;
+  border-width: 1px;
 }
