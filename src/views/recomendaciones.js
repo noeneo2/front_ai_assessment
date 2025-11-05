@@ -1,13 +1,16 @@
 import React, { useContext } from 'react';
 import { Helmet } from 'react-helmet';
-
+import { Link, useNavigate } from 'react-router-dom';
 import { ReportContext } from '../context/ReportContext';
-import './recom.css';
 
-const Recom = (props) => {
+import './recomendaciones.css';
+
+const Recomendaciones = (props) => {
   const { report } = useContext(ReportContext);
+  const navigate = useNavigate();
 
   // Simple loading state while waiting for the report
+  /*
   if (!report || !report.recommendations) {
     return (
       <div className='recom-container1' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -15,6 +18,7 @@ const Recom = (props) => {
       </div>
     );
   }
+  */
 
   return (
     <div className="recom-container1">
@@ -25,6 +29,8 @@ const Recom = (props) => {
         <div className="recom-content">
           <div className="recom-main-content1">
             <div className="recom-header-dashboard">
+
+
               <div className="recom-header-frame">
                 <div className="recom-titleand-status-container">
                   <div className="recom-title-container">
@@ -32,6 +38,7 @@ const Recom = (props) => {
                       Madurez Organizacional en Gen AI
                     </span>
                   </div>
+                  
                   <div className="recom-frame1321316829">
                     <div className="recom-project-status">
                       <img
@@ -48,6 +55,8 @@ const Recom = (props) => {
                     />
                   </div>
                 </div>
+
+                
                 <div className="recom-frame15">
                   <img
                     src="/external/icondownload4611-c77h.svg"
@@ -58,12 +67,16 @@ const Recom = (props) => {
                 </div>
               </div>
               <div className="recom-tabs">
-                <div className="recom-tabitem1">
+
+                <Link to="/dashboard" className="recom-tabitem1" style={{ textDecoration: 'none' }}>
                   <span className="recom-text13">Resultados</span>
-                </div>
+                </Link>
+
+
                 <div className="recom-tabitem2">
                   <span className="recom-text14">Recomendaciones</span>
                 </div>
+
               </div>
             </div>
             <div className="recom-container2">
@@ -133,7 +146,7 @@ const Recom = (props) => {
                             className="recom-iconbulb"
                           />
                           <span className="recom-text24">
-                            {report.recommendations.length} iniciativas recomendadas
+                            {report && report.recommendations ? report.recommendations.length : 0} iniciativas recomendadas
                           </span>
                         </div>
                         <div className="recom-frame13213168451">
@@ -153,7 +166,7 @@ const Recom = (props) => {
                 </div>
 
                 {/* Recommendations mapped from context */}
-                {report.recommendations.map((rec, index) => (
+                {report && report.recommendations && report.recommendations.map((rec, index) => (
                   <div className="recom-card-recommendation1" key={index}>
                     <div className="recom-number-card10">
                       <span className="recom-text28">{rec.title}</span>
@@ -188,7 +201,153 @@ const Recom = (props) => {
                   </div>
                 ))}
 
-                <div className="recom-scores-categories">{/*...Rest of the JSX remains the same...*/}
+                <div className="recom-card-recommendation1">
+                  <div className="recom-number-card10">
+                    <span className="recom-text28">
+                      Implementar modelo operativo AI-first en toda la
+                      organización
+                    </span>
+                    <div className="recom-frame13213168491">
+                      <div className="recom-frame13213168481">
+                        <span className="recom-text29">
+                          Redefinir estructuras organizacionales para poner Gen
+                          AI en el centro de la operación, con roles dedicados y
+                          reportes claros.
+                        </span>
+                        <div className="recom-frame13213168521">
+                          <div className="recom-frame13213168452">
+                            <img
+                              src="/external/iconcalendarminusi461-vuk.svg"
+                              alt="IconcalendarminusI461"
+                              className="recom-iconcalendarminus2"
+                            />
+                            <span className="recom-text30">
+                              <span className="recom-text31">
+                                Tiempo estimado:
+                                <span
+                                  dangerouslySetInnerHTML={{
+                                    __html: ' ',
+                                  }}
+                                />
+                              </span>
+                              <span>5 semanas</span>
+                            </span>
+                          </div>
+                          <div className="recom-frame13213168301">
+                            <span className="recom-text33">Prioridad alta</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="recom-toggle1">
+                        <div className="recom-switch1">
+                          <div className="recom-circle1"></div>
+                        </div>
+                        <span className="recom-text34">
+                          Incluir en simulación
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="recom-card-recommendation2">
+                  <div className="recom-number-card11">
+                    <span className="recom-text35">
+                      Establecer plataforma unificada de Gen AI con LLMOps
+                      completo
+                    </span>
+                    <div className="recom-frame13213168492">
+                      <div className="recom-frame13213168482">
+                        <span className="recom-text36">
+                          Consolidar herramientas, prompts, RAG y fine-tuning en
+                          una plataforma única con CI/CD, monitoreo y
+                          autoscaling.
+                        </span>
+                        <div className="recom-frame13213168522">
+                          <div className="recom-frame13213168453">
+                            <img
+                              src="/external/iconcalendarminusi461-styp.svg"
+                              alt="IconcalendarminusI461"
+                              className="recom-iconcalendarminus3"
+                            />
+                            <span className="recom-text37">
+                              <span className="recom-text38">
+                                Tiempo estimado:
+                                <span
+                                  dangerouslySetInnerHTML={{
+                                    __html: ' ',
+                                  }}
+                                />
+                              </span>
+                              <span>4-5 semanas</span>
+                            </span>
+                          </div>
+                          <div className="recom-frame13213168302">
+                            <span className="recom-text40">
+                              Prioridad media
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="recom-toggle2">
+                        <div className="recom-switch2">
+                          <div className="recom-circle2"></div>
+                        </div>
+                        <span className="recom-text41">
+                          Incluir en simulación
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="recom-card-recommendation3">
+                  <div className="recom-number-card12">
+                    <span className="recom-text42">
+                      Lanzar nuevos productos/servicios habilitados por Gen AI
+                    </span>
+                    <div className="recom-frame13213168493">
+                      <div className="recom-frame13213168483">
+                        <span className="recom-text43">
+                          Identificar oportunidades de mercado y desarrollar
+                          MVPs de productos que aprovechen capacidades de Gen
+                          AI.
+                        </span>
+                        <div className="recom-frame13213168523">
+                          <div className="recom-frame13213168454">
+                            <img
+                              src="/external/iconcalendarminusi461-ergh.svg"
+                              alt="IconcalendarminusI461"
+                              className="recom-iconcalendarminus4"
+                            />
+                            <span className="recom-text44">
+                              <span className="recom-text45">
+                                Tiempo estimado:
+                                <span
+                                  dangerouslySetInnerHTML={{
+                                    __html: ' ',
+                                  }}
+                                />
+                              </span>
+                              <span>1-2 meses</span>
+                            </span>
+                          </div>
+                          <div className="recom-frame13213168303">
+                            <span className="recom-text47">Prioridad alta</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="recom-toggle3">
+                        <div className="recom-switch3">
+                          <div className="recom-circle3"></div>
+                        </div>
+                        <span className="recom-text48">
+                          Incluir en simulación
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="recom-scores-categories">
                   <div className="recom-container3">
                     <div className="recom-frame1321316851">
                       <img
@@ -317,7 +476,7 @@ const Recom = (props) => {
               </div>
             </div>
           </div>
-          <div className="recom-footer">{/*...Footer remains the same...*/}
+          <div className="recom-footer">
             <div className="recom-page-links">
               <div className="recom-logos">
                 <div className="recom-logo">
@@ -372,4 +531,4 @@ const Recom = (props) => {
   );
 };
 
-export default Recom;
+export default Recomendaciones;

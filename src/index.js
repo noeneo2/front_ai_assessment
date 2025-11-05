@@ -9,7 +9,7 @@ import {
 import './style.css';
 import { ReportProvider } from './context/ReportContext'; // Import the provider
 
-import Recom from './views/recom';
+import Recom from './views/recomendaciones';
 import Dashboard from './views/dashboard';
 import Landing from './views/landing';
 import Subiendo from './views/subiendo';
@@ -27,7 +27,7 @@ const App = () => {
           <Route path="/subiendo" element={<Subiendo />} />
           <Route path="/cargando" element={<Cargando />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/recom" element={<Recom />} />
+          <Route path="/recomendaciones" element={<Recom />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </ReportProvider>
