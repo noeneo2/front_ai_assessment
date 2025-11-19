@@ -40,7 +40,7 @@ const Home = (props) => {
           <button onClick={handleGoogleLogin} className="home-button google-button">
             <span>Iniciar sesión con Google</span>
           </button>
-          <button onClick={() => navigate('/newproject')} className="home-button evaluation-button">
+          <button onClick={handleGoogleLogin} className="home-button evaluation-button">
             <span>Empezar evaluación</span>
           </button>
         </div>
