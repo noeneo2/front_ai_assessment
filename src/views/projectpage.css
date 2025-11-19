@@ -1,0 +1,172 @@
+
+.projectpage-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+
+.projectpage-header {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  flex-shrink: 0;
+  border-style: solid;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-color: rgba(0, 0, 51, 1);
+  border-width: 0 0 1px;
+  padding: 0 64px;
+  box-sizing: border-box;
+}
+
+.projectpage-header-logo {
+  height: 24px;
+  width: 78px;
+  object-fit: cover;
+}
+
+.projectpage-header-button {
+  width: 120px;
+  height: 40px;
+  display: flex;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  background-color: #F2F2F2;
+}
+
+.projectpage-logout-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.projectpage-button-text {
+  color: var(--dl-color-default-black);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.projectpage-main-content {
+  top: 80px;
+  left: 0px;
+  width: 100%;
+  height: calc(100% - 160px);
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  flex-direction: column;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.projectpage-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 24px;
+}
+
+.projectpage-title h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.projectpage-title p {
+  font-size: 16px;
+  color: #555;
+}
+
+.projectpage-create-button {
+    background-color: #00005c;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.projectpage-company-list {
+  width: 100%;
+  max-width: 800px;
+}
+
+.projectpage-company-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.projectpage-company-info {
+    display: flex;
+    align-items: center;
+}
+
+.projectpage-file-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 16px;
+}
+
+.projectpage-company-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.projectpage-company-name {
+    font-weight: bold;
+}
+
+.projectpage-company-meta {
+    color: #555;
+    font-size: 14px;
+}
+
+.projectpage-arrow-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.projectpage-footer {
+  left: 0px;
+  width: 100%;
+  bottom: 0px;
+  height: 80px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: space-between;
+  border-color: rgba(0, 0, 51, 1);
+  border-style: solid;
+  border-width: 1px 0 0;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 0 64px;
+  box-sizing: border-box;
+}
+
+.projectpage-footer-logo {
+  height: 16px;
+  width: 54px;
+  object-fit: contain;
+}
+
+.projectpage-footer-text {
+  color: var(--dl-color-default-black);
+  font-size: 14px;
+}

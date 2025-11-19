@@ -43,19 +43,19 @@ const Cargando = (props) => {
           categoria_estilo: "estrategia-adopcion-e-integracion",
           descripcion_general: "La organización demuestra un uso sofisticado de la IA generativa, con una estrategia clara y un alto nivel de adopción en múltiples áreas.",
           puntajes_areas: [
-            { nombre: "Estrategia y Liderazgo", puntaje: 4.2 },
-            { nombre: "Cultura y Personas", puntaje: 3.8 },
-            { nombre: "Procesos y Gobernanza", puntaje: 3.1 },
-            { nombre: "Tecnología y Datos", puntaje: 3.9 },
-            { nombre: "Casos de Uso e Impacto", puntaje: 3.5 },
-            { nombre: "Ética y Riesgos", puntaje: 2.9 },
+            { nombre: "Personas y Cultura", puntaje: 4.2, nivel: "Estrategia, Adopción e Integración" },
+            { nombre: "Governance", puntaje: 3.8, nivel: "Escalamiento y Optimización"  },
+            { nombre: "Data & Tecnología", puntaje: 3.1, nivel: "Escalamiento y Optimización" },
+            { nombre: "Procesos", puntaje: 3.9, nivel: "Escalamiento y Optimización" },
+            { nombre: "Proyectos", puntaje: 3.5, nivel: "Escalamiento y Optimización" },
+            { nombre: "Estrategia", puntaje: 2.9, nivel: "Estrategia, Adopción e Integración" },
           ],
           niveles: [
-            { nombre: "Nivel 1: Inicial", descripcion: "La organización está comenzando a explorar el potencial de la IA generativa. El conocimiento es limitado y no hay una estrategia formal." },
-            { nombre: "Nivel 2: En Desarrollo", descripcion: "Se han implementado algunas iniciativas de IA generativa de forma aislada. Hay conciencia de los beneficios, pero falta una estrategia cohesiva." },
-            { nombre: "Nivel 3: Definido", descripcion: "La organización ha definido una estrategia para la adopción de la IA generativa y está estandarizando procesos y mejores prácticas." },
-            { nombre: "Nivel 4: Avanzado", descripcion: "La IA generativa se utiliza de forma estratégica en toda la organización. Existe una cultura de innovación y experimentación con IA." },
-            { nombre: "Nivel 5: Optimizado", descripcion: "La organización utiliza la IA generativa para transformar sus operaciones y modelos de negocio. La IA es una parte integral de la estrategia y la cultura." }
+            { nombre: "Nivel 1: Exploración", descripcion: "La organización está comenzando a explorar el potencial de la IA generativa. El conocimiento es limitado y no hay una estrategia formal." },
+            { nombre: "Nivel 2: Fundamentos", descripcion: "Se han implementado algunas iniciativas de IA generativa de forma aislada. Hay conciencia de los beneficios, pero falta una estrategia cohesiva." },
+            { nombre: "Nivel 3: Pilotaje", descripcion: "La organización ha definido una estrategia para la adopción de la IA generativa y está estandarizando procesos y mejores prácticas." },
+            { nombre: "Nivel 4: Escalamiento", descripcion: "La IA generativa se utiliza de forma estratégica en toda la organización. Existe una cultura de innovación y experimentación con IA." },
+            { nombre: "Nivel 5: Transformación", descripcion: "La organización utiliza la IA generativa para transformar sus operaciones y modelos de negocio. La IA es una parte integral de la estrategia y la cultura." }
           ]
         };
 
@@ -80,23 +80,23 @@ const Cargando = (props) => {
   }, [file, navigate, setError, setIsLoading, setReportData]);
 
   return (
-    <div className="page1-container1">
+    <div class="cargando-container1">
       <Helmet>
         <title>Procesando - Madurez Organizacional Gen AI</title>
       </Helmet>
-      <div className="page1-cargando">
-        <div className="page1-content">
-        <div className="page1-header">
+      <div class="cargando-cargando">
+        <div class="cargando-content">
+        <div class="cargando-header">
           <img
-              className="page1-header-logo"
+              class="cargando-header-logo"
               src="/external/Logo_negro_NEO_header.svg"
               alt="Logo Neo"
             />
         </div>
-          <div className="page1-main-content">
-            <div className="page1-upload-module">
-              <div className="page1-title">
-                <span className="page1-text1">
+          <div class="cargando-main-content">
+            <div class="cargando-upload-module">
+              <div class="cargando-title">
+                <span class="cargando-text1">
                   {errorMessage ? errorMessage : 'Creando las visualizaciones de datos y recomendaciones...'}
                 </span>
               </div>
@@ -104,17 +104,18 @@ const Cargando = (props) => {
                 <img
                   src="/external/loadinganimation12812-96i-400h.png"
                   alt="Animación de carga"
-                  className="page1-loading-animation1"
+                  class="cargando-loading-animation1"
                 />
               )}
             </div>
           </div>
-          <div className="page1-footer">
+          <div class="cargando-footer">
             <img
-            className="page1-footer-logo"
+            class="cargando-footer-logo"
             src="/external/Logo_negro_NEO_footer.svg"
             alt="Logo Neo"
             />
+             <span class="login-footer-text">Neo Consulting, 2025</span>
           </div>
         </div>
       </div>
