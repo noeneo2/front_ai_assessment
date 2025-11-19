@@ -1,14 +1,18 @@
-# Dependencias
-node_modules/
+# Firebase
+.env
 
-# Archivos de build (si usas React, Angular, Vue, etc.)
-build/
-dist/
+# Dependencies
+/node_modules
 
-# Logs
+# Build files
+/build
+/dist
+.next
+
+# Log files
 npm-debug.log*
+yarn-debug.log*
 yarn-error.log*
 
-# Archivos de entorno
-.env
-.env.local
+# Others
+.DS_Store
