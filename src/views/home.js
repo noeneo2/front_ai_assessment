@@ -2,7 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 import './home.css';
 
@@ -12,16 +13,22 @@ const Home = (props) => {
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      console.log('Attempting sign in with popup...');
       const result = await signInWithPopup(auth, provider);
       
       if (result && result.user) {
-        // User is signed in. The user object is in result.user
-        console.log('User successfully signed in with popup:', result.user);
+        const user = result.user;
+        const userRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(userRef);
 
-        navigate('/newproject');
-      } else {
-          console.log('No user found in popup result.');
+        if (!docSnap.exists()) {
+          // El documento del usuario no existe, así que lo creamos
+          await setDoc(userRef, {
+            displayName: user.displayName,
+            email: user.email,
+          });
+        }
+        
+        navigate('/projectpage');
       }
     } catch (error) {
       console.error("Error during Google popup login:", error.code, error.message);

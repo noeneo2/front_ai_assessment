@@ -6,6 +6,7 @@ export const ReportProvider = ({ children }) => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');
   const [projectName, setProjectName] = useState('');
+  const [companyName, setCompanyName] = useState(''); // Nuevo estado
   const [reportData, setReportData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -17,6 +18,8 @@ export const ReportProvider = ({ children }) => {
     setFileName,
     projectName,
     setProjectName,
+    companyName, // Exportar nuevo estado
+    setCompanyName, // Exportar setter
     reportData,
     setReportData,
     isLoading,
