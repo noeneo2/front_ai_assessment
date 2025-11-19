@@ -18,8 +18,8 @@ const Home = (props) => {
       if (result && result.user) {
         // User is signed in. The user object is in result.user
         console.log('User successfully signed in with popup:', result.user);
-        // ¡Ahora sí debería aparecer un usuario en la consola de Firebase!
-        navigate('/dashboard'); // Navigate to dashboard on successful login
+
+        navigate('/newproject');
       } else {
           console.log('No user found in popup result.');
       }
@@ -40,7 +40,7 @@ const Home = (props) => {
           <button onClick={handleGoogleLogin} className="home-button google-button">
             <span>Iniciar sesión con Google</span>
           </button>
-          <button onClick={() => navigate('/nuevoproyecto')} className="home-button evaluation-button">
+          <button onClick={() => navigate('/newproject')} className="home-button evaluation-button">
             <span>Empezar evaluación</span>
           </button>
         </div>

@@ -17,7 +17,7 @@ import Cargando from './views/cargando';
 import Login from './views/login';
 import NotFound from './views/not-found';
 import ProjectPage from './views/projectpage';
-import NuevoProyecto from './views/nuevoproyecto';
+import NewProject from './views/newproject';
 import Home from './views/home';
 
 const App = () => {
@@ -34,7 +34,7 @@ const App = () => {
           <Route path="/recomendaciones" element={<Recom />} />
           <Route path="/login" element={<Login />} />
           <Route path="/projectpage" element={<ProjectPage />} />
-          <Route path="/nuevoproyecto" element={<NuevoProyecto />} />
+          <Route path="/newproject" element={<NewProject />} />
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
