@@ -21,7 +21,6 @@ const Home = (props) => {
         const docSnap = await getDoc(userRef);
 
         if (!docSnap.exists()) {
-          // El documento del usuario no existe, así que lo creamos
           await setDoc(userRef, {
             displayName: user.displayName,
             email: user.email,
@@ -31,7 +30,8 @@ const Home = (props) => {
         navigate('/projectpage');
       }
     } catch (error) {
-      console.error("Error during Google popup login:", error.code, error.message);
+      // ¡Cambio importante aquí! Imprimimos todo el objeto de error.
+      console.error("Error detallado de autenticación de Google:", error);
     }
   };
 

@@ -3,13 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  apiKey: "AIzaSyAkUgybj5u87z8anqjBv8vyxuZ-NC1nVrs",
+  authDomain: "pruebas-genai.firebaseapp.com",
+  databaseURL: "https://pruebas-genai-default-rtdb.firebaseio.com",
+  projectId: "pruebas-genai",
+  storageBucket: "pruebas-genai.appspot.com",
+  messagingSenderId: "125734547785",
+  appId: "1:125734547785:web:fd68b282d81321eb136a98"
 };
 
 const app = initializeApp(firebaseConfig);
