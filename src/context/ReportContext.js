@@ -5,6 +5,7 @@ export const ReportContext = createContext();
 export const ReportProvider = ({ children }) => {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState('');
+  const [projectName, setProjectName] = useState('');
   const [reportData, setReportData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -14,6 +15,8 @@ export const ReportProvider = ({ children }) => {
     setFile,
     fileName,
     setFileName,
+    projectName,
+    setProjectName,
     reportData,
     setReportData,
     isLoading,

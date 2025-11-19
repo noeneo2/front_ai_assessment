@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
   BrowserRouter as Router,
   Route,
@@ -14,7 +14,11 @@ import Dashboard from './views/dashboard';
 import Landing from './views/landing';
 import Subiendo from './views/subiendo';
 import Cargando from './views/cargando';
+import Login from './views/login';
 import NotFound from './views/not-found';
+import ProjectPage from './views/projectpage';
+import NuevoProyecto from './views/nuevoproyecto';
+import Home from './views/home';
 
 const App = () => {
   return (
@@ -22,12 +26,16 @@ const App = () => {
       {/* Wrap the entire app with the ReportProvider */}
       <ReportProvider>
         <Routes>
-          {/* Use the element prop with JSX for v6 */}
-          <Route path="/" element={<Landing />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/landing" element={<Landing />} />
           <Route path="/subiendo" element={<Subiendo />} />
           <Route path="/cargando" element={<Cargando />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/recomendaciones" element={<Recom />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/projectpage" element={<ProjectPage />} />
+          <Route path="/nuevoproyecto" element={<NuevoProyecto />} />
+          <Route path="/home" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </ReportProvider>
@@ -35,4 +43,6 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const container = document.getElementById('app');
+const root = createRoot(container);
+root.render(<App />);

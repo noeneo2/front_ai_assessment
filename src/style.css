@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=PT+Serif:wght@700&display=swap');
+
 :root {
   --dl-layout-size-large: 144px;
   --dl-layout-size-small: 48px;
@@ -36,6 +38,14 @@
   --dl-layout-space-oneandhalfunits: 24px;
   --dl-color-default-failurebackground: rgba(255, 237, 240, 1);
   --dl-color-default-successbackground: rgba(228, 255, 230, 1);
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'PT Serif', serif;
 }
  
 .button {
@@ -79,11 +89,6 @@
  
 .list-item {
   display: list-item;
-}
- 
-.teleport-show {
-  display: flex !important;
-  transform: none !important;
 }
  
 .thq-input {

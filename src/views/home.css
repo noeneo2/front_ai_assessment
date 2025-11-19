@@ -1,0 +1,39 @@
+.home-container {
+  width: 100%;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #f0f2f5;
+}
+
+.home-content {
+  text-align: center;
+}
+
+.home-buttons {
+  display: flex;
+  margin-top: 24px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.home-button {
+  color: white;
+  cursor: pointer;
+  padding: 12px 24px;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.google-button {
+  background-color: #4285F4;
+  margin-bottom: 16px;
+}
+
+.evaluation-button {
+  background-color: #333;
+}

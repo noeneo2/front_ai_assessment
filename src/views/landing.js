@@ -28,7 +28,7 @@ const Landing = (props) => {
   };
 
   return (
-    <div className="page1-container1">
+    <div className="landing-container1">
       <Helmet>
         <title>Subir Excel - Madurez Organizacional Gen AI</title>
       </Helmet>
@@ -41,39 +41,42 @@ const Landing = (props) => {
         accept=".xlsx, .xls"
       />
 
-      <div className="page1-landing-page">
-        <div className="page1-content">
+      <div className="landing-landing-page">
+        <div className="landing-content">
 
-          <header className="page1-header">
+          <header className="landing-header">
             <img
-              className="page1-header-logo"
+              className="landing-header-logo"
               src="/external/Logo_negro_NEO_header.svg"
               alt="Logo Neo"
             />
           </header>
           
 
-          <main className="page1-main-content">
-            <div className="page1-upload-module">
-              <div className="page1-title">
-                <span className="page1-text1">
+          <main className="landing-main-content">
+            <div className="landing-upload-module">
+              <div className="landing-title">
+                <span className="landing-text1">
                   Transforma tu excel en un dashboard de Madurez Organizacional en Gen AI
                 </span>
               </div>
               
-              <div className="page1-upload" onClick={handleUploadAreaClick} style={{cursor: 'pointer'}}>
+              <div className="landing-upload" onClick={handleUploadAreaClick} style={{cursor: 'pointer'}}>
                 
-                <div className="page1-frame17">
-                  <div className="page1-group3">
-                    <img alt="VectorI281" src="/external/vectori281-d2v4.svg" className="page1-vector001"/>
+                <div className="landing-frame17">
+                  <div className="landing-group3">
+                    <img alt="VectorI281" src="/external/vectori281-d2v4.svg" className="landing-vector001"/>
                   </div>
-                  <div className="page1-frame16">
-                    <span className="page1-text2">
+                  <div className="landing-frame16">
+                    <span className="landing-text2">
                       Seleccione un archivo o arrástrelo aquí.
                     </span>
+                    <span className="landing-text-subtitle">
+                      Archivo de Excel de hasta 50 MB
+                    </span>
                   </div>
-                  <div className="page1-frame15">
-                    <span className="page1-text4">Examinar archivo</span>
+                  <div className="landing-frame15">
+                    <span className="landing-text4">Examinar archivo</span>
                   </div>
                 </div>
               </div>
@@ -81,9 +84,9 @@ const Landing = (props) => {
           </main>
           
 
-          <footer className="page1-footer">
+          <footer className="landing-footer">
             <img
-            className="page1-footer-logo"
+            className="landing-footer-logo"
             src="/external/Logo_negro_NEO_footer.svg"
             alt="Logo Neo"
             />
