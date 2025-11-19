@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
 import { ReportContext } from '../context/ReportContext';
+import { auth, db } from '../firebase';
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
+
 import './cargando.css';
 
 const Cargando = (props) => {
-  const { file, setReportData, setIsLoading, setError } = useContext(ReportContext);
+  const { file, companyName, setReportData, setIsLoading, setError } = useContext(ReportContext);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (!file) {
-      navigate('/');
+    if (!file || !companyName) {
+      navigate('/newproject');
       return;
     }
 
@@ -21,22 +22,16 @@ const Cargando = (props) => {
       setIsLoading(true);
       setError(null);
       setErrorMessage('');
+      const user = auth.currentUser;
 
-      // const formData = new FormData();
-      // formData.append('file', file);
+      if (!user) {
+        setError("No hay un usuario autenticado.");
+        navigate('/');
+        return;
+      }
 
       try {
-        // SIMULACIÓN DE DATOS: Se comenta la llamada al backend y se usan datos de ejemplo
-        /*
-        const response = await axios.post('http://127.0.0.1:8000/process-excel/', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        setReportData(response.data);
-        */
-
+        // Simulación de procesamiento de archivo y obtención de datos de reporte
         const mockReportData = {
           puntaje_general: 2.3,
           categoria_general: "Estrategia, Adopción e Integración",
@@ -59,25 +54,42 @@ const Cargando = (props) => {
           ]
         };
 
+        // Lógica para guardar en Firestore
+        const companiesRef = collection(db, 'users', user.uid, 'companies');
+        const q = query(companiesRef, where("companyName", "==", companyName));
+        const querySnapshot = await getDocs(q);
+
+        let companyId;
+        if (querySnapshot.empty) {
+          const companyDocRef = await addDoc(companiesRef, { companyName: companyName });
+          companyId = companyDocRef.id;
+        } else {
+          companyId = querySnapshot.docs[0].id;
+        }
+
+        const testsRef = collection(db, 'users', user.uid, 'companies', companyId, 'tests');
+        await addDoc(testsRef, {
+          generalResult: mockReportData,
+          testDate: serverTimestamp()
+        });
+
+        setReportData(mockReportData);
+
         setTimeout(() => {
-          setReportData(mockReportData);
           setIsLoading(false);
           navigate('/dashboard');
-        }, 2000); // Simula una carga de 2 segundos
-        
-        // navigate('/dashboard');
+        }, 2000);
 
       } catch (err) {
         console.error("Error al procesar el archivo:", err);
         setError(err);
         setErrorMessage('Hubo un error al procesar tu archivo. Por favor, inténtalo de nuevo.');
-      } finally {
-        // setIsLoading(false);
+        setIsLoading(false);
       }
     };
 
     processFile();
-  }, [file, navigate, setError, setIsLoading, setReportData]);
+  }, [file, companyName, navigate, setError, setIsLoading, setReportData]);
 
   return (
     <div class="cargando-container1">

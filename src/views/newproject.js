@@ -1,19 +1,22 @@
 import React, { useContext, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
-
 import { ReportContext } from '../context/ReportContext';
 import './newproject.css';
 
 const NewProject = (props) => {
-  const { setFile, setFileName, projectName, setProjectName } = useContext(ReportContext);
+  const { setFile, setFileName, companyName, setCompanyName } = useContext(ReportContext);
   const navigate = useNavigate();
-  
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     if (!selectedFile) {
+      return;
+    }
+
+    if (!companyName.trim()) {
+      alert("Por favor, ingresa el nombre de la empresa antes de subir el archivo.");
       return;
     }
 
@@ -27,14 +30,14 @@ const NewProject = (props) => {
     fileInputRef.current.click();
   };
   
-  const handleProjectNameChange = (event) => {
-    setProjectName(event.target.value);
+  const handleCompanyNameChange = (event) => {
+    setCompanyName(event.target.value);
   };
 
   return (
     <div className="newproject-container1">
       <Helmet>
-        <title>New Project - Madurez Organizacional Gen AI</title>
+        <title>Nuevo Proyecto - Madurez Organizacional Gen AI</title>
       </Helmet>
       
       <input 
@@ -56,7 +59,6 @@ const NewProject = (props) => {
             />
           </header>
           
-
           <main className="newproject-main-content">
             <div className="newproject-upload-module">
               <div className="newproject-title">
@@ -67,19 +69,19 @@ const NewProject = (props) => {
               
               <div className="newproject-steps-container">
                 <span className="newproject-step-title">
-                  Paso 1: Ingresar el nombre del proyecto
+                  Paso 1: Ingresa el nombre de la empresa
                 </span>
                 <div className="newproject-input-container">
                   <input
                     type="text"
-                    placeholder="Ingresa el nombre del proyecto"
-                    value={projectName}
-                    onChange={handleProjectNameChange}
+                    placeholder="Ingresa el nombre de la empresa"
+                    value={companyName}
+                    onChange={handleCompanyNameChange}
                     className="newproject-project-name-input"
                   />
                 </div>
                 <span className="newproject-step-title">
-                  Paso 2: Subir el archivo
+                  Paso 2: Subir el archivo de evaluación
                 </span>
               </div>
 
@@ -105,7 +107,6 @@ const NewProject = (props) => {
             </div>
           </main>
           
-
           <footer className="newproject-footer">
             <img
             className="newproject-footer-logo"
@@ -113,8 +114,6 @@ const NewProject = (props) => {
             alt="Logo Neo"
             />
           </footer>
-
-
         </div>
       </div>
     </div>
