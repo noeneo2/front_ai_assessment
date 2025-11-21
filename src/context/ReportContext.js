@@ -18,8 +18,8 @@ export const ReportProvider = ({ children }) => {
     setFileName,
     projectName,
     setProjectName,
-    companyName, // Exportar nuevo estado
-    setCompanyName, // Exportar setter
+    companyName,
+    setCompanyName,
     reportData,
     setReportData,
     isLoading,

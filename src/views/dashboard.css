@@ -493,6 +493,7 @@
   border-width: 2px;
   border-radius: 8px;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .home-frame1321316820 {
@@ -523,7 +524,6 @@
 }
 
 .home-text20 {
-  color: var(--dl-color-default-gris);
   height: auto;
   font-size: 16px;
   align-self: stretch;
@@ -585,7 +585,6 @@
 }
 
 .home-text22 {
-  color: var(--dl-color-default-gris);
   height: auto;
   font-size: 16px;
   align-self: stretch;
@@ -651,7 +650,6 @@
 }
 
 .home-text24 {
-  color: var(--dl-color-default-neoblue);
   height: auto;
   font-size: 16px;
   align-self: stretch;
@@ -665,7 +663,7 @@
 }
 
 .home-text25 {
-  color: rgba(0, 0, 0, 0.6000000238418579);
+  color: var(--dl-color-default-gris);
   height: auto;
   font-size: 14px;
   align-self: stretch;
@@ -713,7 +711,6 @@
 }
 
 .home-text26 {
-  color: var(--dl-color-default-gris);
   height: auto;
   font-size: 16px;
   align-self: stretch;
@@ -774,7 +771,6 @@
 }
 
 .home-text26 {
-  color: var(--dl-color-default-gris);
   height: auto;
   font-size: 16px;
   align-self: stretch;
@@ -788,7 +784,6 @@
 }
 
 .home-text27 {
-  color: var(--dl-color-default-gris);
   height: auto;
   font-size: 14px;
   align-self: stretch;
@@ -808,10 +803,10 @@
 }
 
 .home-vector1 {
-  top: 1px;
+  top: -28px;
   left: 308px;
-  width: 497px;
-  height: 335px;
+  width: 665px;
+  height: 500px;
   z-index: 5;
   position: absolute;
 }
@@ -1388,16 +1383,6 @@
   line-height: 40px;
   font-stretch: normal;
   text-decoration: none;
-}
-
-.home-frame13213168305 {
-  gap: 10px;
-  display: flex;
-  padding: 2px 8px;
-  align-items: center;
-  border-radius: 4px;
-  justify-content: center;
-  background-color: var(--dl-color-default-successbackground);
 }
 
 .home-text53 {
@@ -2979,35 +2964,8 @@
   line-height: 24px;
 }
 
-/* --- Awareness y Exploración --- */
-.home-ellipse4.categoria-awareness-exploracion {
-  top: 20px;
-  left: 25px;
-}
-
-/* --- Estrategia, Adopción e Integración --- */
-.home-ellipse4.categoria-estrategia-adopcion-e-integracion {
-  top: 60px;
-  left: 65px;
-}
-
-/* --- Escalamiento y Optimización --- */
-.home-ellipse4.categoria-escalamiento-y-optimizacion {
-  top: 100px;
-  left: 105px;
-}
-
-/* --- Transformación --- */
-.home-ellipse4.categoria-transformacion {
-  top: 140px;
-  left: 145px;
-}
-
-
 
 .home-ellipse4 {
-  top: 194px;
-  left: 523px;
   width: 16px;
   height: 16px;
   z-index: 6;
@@ -3020,8 +2978,7 @@
 
 
 .home-rectangle4 {
-  top: 1px;
-  left: 496px;
+  top: -1px;
   width: 70px;
   height: 100%;
   z-index: 4;
