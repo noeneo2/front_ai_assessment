@@ -4,15 +4,36 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ReportContext } from '../context/ReportContext';
 import { auth } from '../firebase';
 import APIService from '../services/api';
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Radar } from 'react-chartjs-2';
 
 import './recomendaciones.css';
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
 
 const Recomendaciones = (props) => {
   const { reportData, companyName, setReportData } = useContext(ReportContext);
   const navigate = useNavigate();
+  const [selectedRecommendations, setSelectedRecommendations] = useState({});
   const [assessments, setAssessments] = useState([]);
   const [loadingAssessments, setLoadingAssessments] = useState(false);
   const [currentAssessmentId, setCurrentAssessmentId] = useState(null);
+  const [showRadarChart, setShowRadarChart] = useState(false);
 
   useEffect(() => {
     if (!reportData) {
@@ -71,16 +92,117 @@ const Recomendaciones = (props) => {
     navigate('/projectpage');
   };
 
-  // Simple loading state while waiting for the report
-  /*
-  if (!reportData || !reportData.recommendations) {
-    return (
-      <div className='recom-container1' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <h1>Cargando recomendaciones...</h1>
-      </div>
-    );
-  }
-  */
+  const toggleRecommendation = (index) => {
+    setSelectedRecommendations(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
+  const calculateSimulatedScores = () => {
+    if (!reportData || !reportData.puntajes_areas) return [];
+
+    return reportData.puntajes_areas.map(area => {
+      // Find if there's a recommendation for this area that is selected
+      // Assuming 1-to-1 mapping by index or name. 
+      // Since reportData.recommendations might not have 'area' field explicitly in all mocks,
+      // we'll assume the order matches or try to match by name if available.
+      // For now, let's assume reportData.recommendations has a 'dimension' field matching area.nombre
+
+      const recIndex = reportData.recommendations ? reportData.recommendations.findIndex(r => r.dimension === area.nombre) : -1;
+      const isSelected = recIndex !== -1 && selectedRecommendations[recIndex];
+
+      // Rule: Increase level by 1. Levels are 2 points wide. So +2.0 points.
+      // Cap at 10.0
+      let simulatedScore = area.puntaje;
+      let increase = 0;
+
+      if (isSelected) {
+        increase = 2.0;
+        simulatedScore = Math.min(10, simulatedScore + increase);
+      }
+
+      return {
+        ...area,
+        simulatedScore,
+        increasePercentage: isSelected ? Math.round((increase / area.puntaje) * 100) : 0
+      };
+    });
+  };
+
+  const simulatedAreas = calculateSimulatedScores();
+  const simulatedTotalScore = simulatedAreas.length > 0
+    ? simulatedAreas.reduce((acc, curr) => acc + curr.simulatedScore, 0) / simulatedAreas.length
+    : 0;
+
+  const originalTotalScore = reportData && reportData.puntaje_general ? reportData.puntaje_general : 0;
+  const totalIncreasePercentage = originalTotalScore > 0
+    ? Math.round(((simulatedTotalScore - originalTotalScore) / originalTotalScore) * 100)
+    : 0;
+
+  // Prepare Radar Chart Data
+  const radarChartData = {
+    labels: simulatedAreas.map(area => area.nombre),
+    datasets: [
+      {
+        label: 'Puntuación Actual',
+        data: simulatedAreas.map(area => area.puntaje),
+        backgroundColor: 'rgba(102, 102, 102, 0.2)',
+        borderColor: 'rgba(102, 102, 102, 1)',
+        borderWidth: 1,
+      },
+      {
+        label: 'Puntuación Simulada',
+        data: simulatedAreas.map(area => area.simulatedScore),
+        backgroundColor: 'rgba(0, 0, 51, 0.2)',
+        borderColor: '#000033',
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const radarChartOptions = {
+    scales: {
+      r: {
+        angleLines: {
+          display: true,
+          color: '#e0e0e0',
+        },
+        suggestedMin: 0,
+        suggestedMax: 5,
+        ticks: {
+          stepSize: 1,
+          backdropColor: 'transparent',
+          font: {
+            family: 'Montserrat',
+            size: 10
+          }
+        },
+        pointLabels: {
+          font: {
+            size: 11,
+            family: 'Montserrat',
+            weight: 'bold'
+          },
+          color: '#333'
+        }
+      },
+    },
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          font: {
+            family: 'Montserrat',
+            size: 12
+          },
+          usePointStyle: true,
+          padding: 20
+        }
+      }
+    },
+    maintainAspectRatio: false
+  };
 
   return (
     <div className="recom-container1">
@@ -219,9 +341,9 @@ const Recomendaciones = (props) => {
                             />
                             <div className="recom-categoria21">
                               <span className="recom-text19">
-                                Estrategia, Adopción e Integración
+                                {reportData ? reportData.categoria_general : 'N/A'}
                               </span>
-                              <span className="recom-text20">2.00 - 2.99</span>
+                              <span className="recom-text20">{originalTotalScore.toFixed(2)}</span>
                             </div>
                           </div>
                         </div>
@@ -232,7 +354,7 @@ const Recomendaciones = (props) => {
                         />
                         <div className="recom-frame1321316843">
                           <span className="recom-text21">
-                            El siguiente nivel
+                            Nivel simulado
                           </span>
                           <div className="recom-frame1321316832">
                             <img
@@ -242,9 +364,12 @@ const Recomendaciones = (props) => {
                             />
                             <div className="recom-categoria22">
                               <span className="recom-text22">
-                                Escalamiento y Optimización
+                                {simulatedTotalScore >= 8 ? 'Transformación' :
+                                  simulatedTotalScore >= 6 ? 'Escalamiento' :
+                                    simulatedTotalScore >= 4 ? 'Pilotaje' :
+                                      simulatedTotalScore >= 2 ? 'Fundamentos' : 'Exploración'}
                               </span>
-                              <span className="recom-text23">3.00 - 3.99</span>
+                              <span className="recom-text23">{simulatedTotalScore.toFixed(2)}</span>
                             </div>
                           </div>
                         </div>
@@ -302,7 +427,15 @@ const Recomendaciones = (props) => {
                           </div>
                         </div>
                         <div className="recom-toggle1">
-                          <div className="recom-switch1">
+                          <div
+                            className="recom-switch1"
+                            onClick={() => toggleRecommendation(index)}
+                            style={{
+                              cursor: 'pointer',
+                              backgroundColor: selectedRecommendations[index] ? 'var(--dl-color-default-neoblue)' : '#ccc',
+                              alignItems: selectedRecommendations[index] ? 'flex-end' : 'flex-start'
+                            }}
+                          >
                             <div className="recom-circle1"></div>
                           </div>
                           <span className="recom-text34">Incluir en simulación</span>
@@ -314,119 +447,118 @@ const Recomendaciones = (props) => {
 
                 <div className="recom-scores-categories">
                   <div className="recom-container3">
-                    <div className="recom-frame1321316851">
-                      <img
-                        src="/external/iconcalculator4618-ajzq.svg"
-                        alt="Iconcalculator4618"
-                        className="recom-iconcalculator"
-                      />
-                      <span className="recom-text49">Puntuación simulada</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '20px' }}>
+                      <div className="recom-frame1321316851">
+                        <img
+                          src="/external/iconcalculator4618-ajzq.svg"
+                          alt="Iconcalculator4618"
+                          className="recom-iconcalculator"
+                        />
+                        <span className="recom-text49">Puntuación simulada</span>
+                      </div>
+
+                      <div className="view-switch" style={{ display: 'flex', gap: '4px', backgroundColor: '#f0f0f0', borderRadius: '8px', padding: '4px' }}>
+                        <button
+                          onClick={() => setShowRadarChart(true)}
+                          style={{
+                            padding: '8px 12px',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            backgroundColor: showRadarChart ? 'var(--dl-color-default-neoblue)' : 'transparent',
+                            transition: 'background-color 0.3s ease'
+                          }}
+                        >
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill={showRadarChart ? '#ffffff' : '#666666'}>
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                          </svg>
+                        </button>
+
+                        <button
+                          onClick={() => setShowRadarChart(false)}
+                          style={{
+                            padding: '8px 12px',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            backgroundColor: !showRadarChart ? 'var(--dl-color-default-neoblue)' : 'transparent',
+                            transition: 'background-color 0.3s ease'
+                          }}
+                        >
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill={!showRadarChart ? '#ffffff' : '#666666'}>
+                            <path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm11 0h7v7h-7v-7z" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
-                    <div className="recom-frame1321316812">
-                      <div className="recom-frame13213168151">
-                        <div className="recom-frame1321316813">
-                          <div className="recom-card-sub-score1">
-                            <div className="recom-number-card13">
-                              <span className="recom-text50">
-                                Personas y Cultura
-                              </span>
-                              <div className="recom-numberdetail1">
-                                <div className="recom-frame13213168111">
-                                  <span className="recom-text51">2.84</span>
-                                  <div className="recom-frame13213168304">
-                                    <span className="recom-text52">+3%</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="recom-card-sub-score2">
-                            <div className="recom-number-card14">
-                              <span className="recom-text53">
-                                Data &amp; Tecnología
-                              </span>
-                              <div className="recom-numberdetail2">
-                                <div className="recom-frame13213168112">
-                                  <span className="recom-text54">3.43</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="recom-card-sub-score3">
-                            <div className="recom-number-card15">
-                              <span className="recom-text55">Procesos</span>
-                              <div className="recom-numberdetail3">
-                                <div className="recom-frame13213168113">
-                                  <span className="recom-text56">2.22</span>
-                                  <div className="recom-frame13213168305">
-                                    <span className="recom-text57">+2%</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="recom-card-sub-score4">
-                            <div className="recom-number-card16">
-                              <span className="recom-text58">Governance</span>
-                              <div className="recom-numberdetail4">
-                                <div className="recom-frame13213168114">
-                                  <span className="recom-text59">2.23</span>
-                                  <div className="recom-frame13213168306">
-                                    <span className="recom-text60">+10%</span>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+
+                    {showRadarChart ? (
+                      <div className="recom-container-radar" style={{ width: '100%', height: '500px', display: 'flex', justifyContent: 'center' }}>
+                        <div className="recom-frame-radar" style={{ width: '500px', height: '100%' }}>
+                          <Radar data={radarChartData} options={radarChartOptions} />
                         </div>
-                        <div className="recom-frame1321316850">
-                          <div className="recom-frame1321316847">
-                            <div className="recom-frame1321316814">
-                              <div className="recom-card-sub-score5">
-                                <div className="recom-number-card17">
-                                  <span className="recom-text61">
-                                    Proyectos
-                                  </span>
-                                  <div className="recom-numberdetail5">
-                                    <div className="recom-frame13213168115">
-                                      <span className="recom-text62">2.32</span>
-                                      <div className="recom-frame13213168307">
-                                        <span className="recom-text63">
-                                          +5%
-                                        </span>
-                                      </div>
+                      </div>
+                    ) : (
+                      <div className="recom-frame1321316812">
+                        <div className="recom-frame13213168151">
+                          <div className="recom-frame1321316813">
+
+                            {/* Render simulated areas dynamically */}
+                            {simulatedAreas.slice(0, 4).map((area, i) => (
+                              <div className={`recom-card-sub-score${i + 1}`} key={i}>
+                                <div className={`recom-number-card${13 + i}`}>
+                                  <span className="recom-text-area-name">{area.nombre}</span>
+                                  <div className={`recom-numberdetail${i + 1}`}>
+                                    <div className={`recom-frame1321316811${i + 1}`}>
+                                      <span className="recom-text-area-score">{area.simulatedScore.toFixed(2)}</span>
+                                      {area.increasePercentage > 0 && (
+                                        <div className={`recom-frame1321316830${4 + i}`}>
+                                          <span className="recom-text-increase-percentage">+{area.increasePercentage}%</span>
+                                        </div>
+                                      )}
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                              <div className="recom-card-sub-score6">
-                                <div className="recom-number-card18">
-                                  <span className="recom-text64">
-                                    Estrategia
-                                  </span>
-                                  <div className="recom-numberdetail6">
-                                    <div className="recom-frame13213168116">
-                                      <span className="recom-text65">2.33</span>
-                                      <div className="recom-frame13213168308">
-                                        <span className="recom-text66">
-                                          +4%
-                                        </span>
+                            ))}
+
+                          </div>
+                          <div className="recom-frame1321316850">
+                            <div className="recom-frame1321316847">
+                              <div className="recom-frame1321316814">
+
+                                {simulatedAreas.slice(4, 6).map((area, i) => (
+                                  <div className={`recom-card-sub-score${5 + i}`} key={i + 4}>
+                                    <div className={`recom-number-card${17 + i}`}>
+                                      <span className="recom-text-area-name">{area.nombre}</span>
+                                      <div className={`recom-numberdetail${5 + i}`}>
+                                        <div className={`recom-frame1321316811${5 + i}`}>
+                                          <span className="recom-text-area-score">{area.simulatedScore.toFixed(2)}</span>
+                                          {area.increasePercentage > 0 && (
+                                            <div className={`recom-frame1321316830${7 + i}`}>
+                                              <span className="recom-text-increase-percentage">+{area.increasePercentage}%</span>
+                                            </div>
+                                          )}
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
+                                ))}
+
                               </div>
                             </div>
-                          </div>
-                          <div className="recom-frame13213168152">
-                            <div className="recom-card-sub-score7">
-                              <div className="recom-number-card19">
-                                <span className="recom-text67">Total</span>
-                                <div className="recom-numberdetail7">
-                                  <div className="recom-frame13213168117">
-                                    <span className="recom-text68">2.32</span>
-                                    <div className="recom-frame13213168309">
-                                      <span className="recom-text69">+5%</span>
+                            <div className="recom-frame13213168152">
+                              <div className="recom-card-sub-score7">
+                                <div className="recom-number-card19">
+                                  <span className="recom-text67">Total</span>
+                                  <div className="recom-numberdetail7">
+                                    <div className="recom-frame13213168117">
+                                      <span className="recom-text68">{simulatedTotalScore.toFixed(2)}</span>
+                                      {totalIncreasePercentage > 0 && (
+                                        <div className="recom-frame13213168309">
+                                          <span className="recom-text69">+{totalIncreasePercentage}%</span>
+                                        </div>
+                                      )}
                                     </div>
                                   </div>
                                 </div>
@@ -435,7 +567,7 @@ const Recomendaciones = (props) => {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
