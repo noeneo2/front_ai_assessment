@@ -1,17 +1,79 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReportContext } from '../context/ReportContext';
+import { auth } from '../firebase';
+import APIService from '../services/api';
 
 import './recomendaciones.css';
 
 const Recomendaciones = (props) => {
-  const { report } = useContext(ReportContext);
+  const { reportData, companyName, setReportData } = useContext(ReportContext);
   const navigate = useNavigate();
+  const [assessments, setAssessments] = useState([]);
+  const [loadingAssessments, setLoadingAssessments] = useState(false);
+  const [currentAssessmentId, setCurrentAssessmentId] = useState(null);
+
+  useEffect(() => {
+    if (!reportData) {
+      navigate('/projectpage');
+      return;
+    }
+
+    // Set current assessment ID
+    if (reportData.project_id) {
+      setCurrentAssessmentId(reportData.project_id);
+    }
+
+    // Load all assessments for this company
+    const loadAssessments = async () => {
+      const user = auth.currentUser;
+      if (!user || !companyName) return;
+
+      try {
+        setLoadingAssessments(true);
+        const companyAssessments = await APIService.getCompanyAssessments(companyName, user.uid);
+        setAssessments(companyAssessments);
+        setLoadingAssessments(false);
+      } catch (error) {
+        console.error('Error loading assessments:', error);
+        setLoadingAssessments(false);
+      }
+    };
+
+    loadAssessments();
+  }, [reportData, navigate, companyName]);
+
+  const handleAssessmentClick = async (assessment) => {
+    if (assessment.project_id === currentAssessmentId) return; // Already selected
+
+    try {
+      const assessmentData = await APIService.getAssessment(assessment.project_id);
+      setReportData(assessmentData);
+      setCurrentAssessmentId(assessment.project_id);
+    } catch (error) {
+      console.error('Error loading assessment:', error);
+      alert('Error al cargar el assessment');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      navigate('/');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+      alert('Error al cerrar sesión');
+    }
+  };
+
+  const handleGoToProjects = () => {
+    navigate('/projectpage');
+  };
 
   // Simple loading state while waiting for the report
   /*
-  if (!report || !report.recommendations) {
+  if (!reportData || !reportData.recommendations) {
     return (
       <div className='recom-container1' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <h1>Cargando recomendaciones...</h1>
@@ -32,40 +94,65 @@ const Recomendaciones = (props) => {
 
 
               <div className="recom-header-frame">
-                <div className="recom-titleand-status-container">
-                  <div className="recom-title-container">
-                    <span className="recom-text10">
-                      Madurez Organizacional en Gen AI
-                    </span>
-                  </div>
-                  
-                  <div className="recom-frame1321316829">
-                    <div className="recom-project-status">
-                      <img
-                        src="/external/statusdot4611-npxr-200h.png"
-                        alt="StatusDot4611"
-                        className="recom-status-dot"
-                      />
-                      <span className="recom-text11">Análisis éxitoso</span>
-                    </div>
-                    <img
-                      src="/external/iconrefresh4611-0oe.svg"
-                      alt="Iconrefresh4611"
-                      className="recom-iconrefresh"
-                    />
+
+                <div className="recom-header-1">
+
+                  <div className="recom-nav-buttons">
+                    <button className="recom-nav-button" onClick={handleGoToProjects}>
+                      <svg className="recom-nav-button-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" fill="currentColor" />
+                      </svg>
+                      <span>Todos los proyectos</span>
+                    </button>
+                    <button className="recom-nav-button" onClick={handleLogout}>
+                      <svg className="recom-nav-button-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" fill="currentColor" />
+                      </svg>
+                      <span>Logout</span>
+                    </button>
                   </div>
                 </div>
 
-                
-                <div className="recom-frame15">
-                  <img
-                    src="/external/icondownload4611-c77h.svg"
-                    alt="Icondownload4611"
-                    className="recom-icondownload"
-                  />
-                  <span className="recom-text12">Descargar PDF</span>
+                <div className="recom-header-2">
+                  <div className="recom-titleand-status-container">
+                    <div className="recom-title-container">
+                      <span className="recom-text10">
+                        {companyName}
+                      </span>
+                    </div>
+
+                    <div className="recom-frame1321316829">
+                      <div className="recom-project-status">
+                        <img
+                          src="/external/statusdot4611-npxr-200h.png"
+                          alt="StatusDot4611"
+                          className="recom-status-dot"
+                        />
+                        <span className="recom-text11">Análisis éxitoso</span>
+                      </div>
+                      <img
+                        src="/external/iconrefresh4611-0oe.svg"
+                        alt="Iconrefresh4611"
+                        className="recom-iconrefresh"
+                      />
+                    </div>
+                  </div>
+
+
+                  <div className="recom-frame15">
+                    <img
+                      src="/external/icondownload4611-c77h.svg"
+                      alt="Icondownload4611"
+                      className="recom-icondownload"
+                    />
+                    <span className="recom-text12">Descargar PDF</span>
+                  </div>
                 </div>
+
+
               </div>
+
+
               <div className="recom-tabs">
 
                 <Link to="/dashboard" className="recom-tabitem1" style={{ textDecoration: 'none' }}>
@@ -82,12 +169,36 @@ const Recomendaciones = (props) => {
             <div className="recom-container2">
               <div className="recom-sidebar">
                 <div className="recom-side-panel-menu">
-                  <div className="recom-menuitem1">
-                    <span className="recom-text15">20 de octubre 2025</span>
-                  </div>
-                  <div className="recom-menuitem2">
-                    <span className="recom-text16">3 de marzo 2025</span>
-                  </div>
+                  {loadingAssessments ? (
+                    <div style={{ padding: '20px', textAlign: 'center' }}>
+                      <span style={{ fontSize: '12px', color: '#666' }}>Cargando...</span>
+                    </div>
+                  ) : assessments.length === 0 ? (
+                    <div style={{ padding: '20px', textAlign: 'center' }}>
+                      <span style={{ fontSize: '12px', color: '#666' }}>No hay assessments</span>
+                    </div>
+                  ) : (
+                    assessments.map((assessment) => (
+                      <div
+                        key={assessment.project_id}
+                        className={`recom-menuitem1 ${assessment.project_id === currentAssessmentId ? 'active' : ''}`}
+                        onClick={() => handleAssessmentClick(assessment)}
+                        style={{
+                          cursor: 'pointer',
+                          backgroundColor: assessment.project_id === currentAssessmentId ? '#e0f7fa' : 'transparent',
+                          borderLeft: assessment.project_id === currentAssessmentId ? '3px solid #00bcd4' : 'none'
+                        }}
+                      >
+                        <span className="recom-text15">
+                          {new Date(assessment.date).toLocaleDateString('es-ES', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                          })}
+                        </span>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
               <div className="recom-main-content2">
@@ -146,7 +257,7 @@ const Recomendaciones = (props) => {
                             className="recom-iconbulb"
                           />
                           <span className="recom-text24">
-                            {report && report.recommendations ? report.recommendations.length : 0} iniciativas recomendadas
+                            {reportData && reportData.recommendations ? reportData.recommendations.length : 0} iniciativas recomendadas
                           </span>
                         </div>
                         <div className="recom-frame13213168451">
@@ -166,7 +277,7 @@ const Recomendaciones = (props) => {
                 </div>
 
                 {/* Recommendations mapped from context */}
-                {report && report.recommendations && report.recommendations.map((rec, index) => (
+                {reportData && reportData.recommendations && reportData.recommendations.map((rec, index) => (
                   <div className="recom-card-recommendation1" key={index}>
                     <div className="recom-number-card10">
                       <span className="recom-text28">{rec.title}</span>

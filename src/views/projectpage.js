@@ -1,89 +1,86 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
-import { auth, db } from '../firebase';
-import { collection, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
+import { auth } from '../firebase';
 import { ReportContext } from '../context/ReportContext';
+import APIService from '../services/api';
 import './projectpage.css';
 
 const ProjectPage = (props) => {
   const [companies, setCompanies] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { setReportData, setCompanyName } = useContext(ReportContext);
 
   useEffect(() => {
+    const fetchCompanies = async () => {
+      const user = auth.currentUser;
+
+      if (!user) {
+        navigate('/');
+        return;
+      }
+
+      try {
+        setLoading(true);
+
+        // Get all companies for the user
+        const userCompanies = await APIService.getUserCompanies(user.uid);
+
+        // For each company, get assessments
+        const companiesData = await Promise.all(
+          userCompanies.map(async (companyName) => {
+            const assessments = await APIService.getCompanyAssessments(companyName, user.uid);
+
+            return {
+              id: companyName,
+              companyName: companyName,
+              assessments: assessments.length,
+              lastTest: assessments.length > 0
+                ? new Date(assessments[0].date).toLocaleDateString()
+                : 'N/A',
+              latestAssessment: assessments.length > 0 ? assessments[0] : null
+            };
+          })
+        );
+
+        setCompanies(companiesData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching companies:', error);
+        setLoading(false);
+      }
+    };
+
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        const companiesCollection = collection(db, 'users', user.uid, 'companies');
-        
-        const unsub = onSnapshot(companiesCollection, async (companiesSnapshot) => {
-          const companiesData = await Promise.all(companiesSnapshot.docs.map(async (companyDoc) => {
-            const company = { id: companyDoc.id, ...companyDoc.data() };
-            
-            // Consultar el último test para cada compañía
-            const testsQuery = query(
-              collection(db, 'users', user.uid, 'companies', companyDoc.id, 'tests'), 
-              orderBy('testDate', 'desc'), 
-              limit(1)
-            );
-            const testsSnapshot = await getDocs(testsQuery);
-            
-            let lastTestDate = 'N/A';
-            let testCount = 0;
-
-            if (!testsSnapshot.empty) {
-              const lastTest = testsSnapshot.docs[0].data();
-              lastTestDate = lastTest.testDate?.toDate().toLocaleDateString() || 'Fecha inválida';
-              
-              // Para contar todos los tests, necesitamos otra consulta sin el limit
-              const allTestsQuery = collection(db, 'users', user.uid, 'companies', companyDoc.id, 'tests');
-              const allTestsSnapshot = await getDocs(allTestsQuery);
-              testCount = allTestsSnapshot.size;
-            }
-            
-            return {
-              ...company,
-              assessments: testCount,
-              lastTest: lastTestDate
-            };
-          }));
-          setCompanies(companiesData);
-        });
-
-        return () => unsub();
+        fetchCompanies();
       } else {
         setCompanies([]);
-        navigate('/'); // Si no hay usuario, redirigir al home
+        navigate('/');
       }
     });
 
     return () => unsubscribe();
   }, [navigate]);
 
-  const handleCompanyClick = (company) => {
-    // Aquí asumimos que queremos cargar el último test de la empresa al ir al dashboard
-    // Esto se puede refinar si se quiere permitir elegir un test específico
-    const user = auth.currentUser;
-    if (user) {
-      const testsQuery = query(
-        collection(db, 'users', user.uid, 'companies', company.id, 'tests'),
-        orderBy('testDate', 'desc'),
-        limit(1)
-      );
-      getDocs(testsQuery).then((testsSnapshot) => {
-        if (!testsSnapshot.empty) {
-          const lastTest = testsSnapshot.docs[0].data();
-          setCompanyName(company.companyName); // Guardamos el nombre de la empresa
-          setReportData(lastTest.generalResult); // Guardamos los datos del reporte
-          navigate('/dashboard');
-        } else {
-          // Si no hay tests, tal vez queramos ir a la página de nuevo proyecto
-          // para esa empresa o simplemente mostrar un mensaje.
-          console.log("No hay tests para esta empresa. Creando uno nuevo...");
-          setCompanyName(company.companyName);
-          navigate('/newproject');
-        }
-      });
+  const handleCompanyClick = async (company) => {
+    if (company.latestAssessment) {
+      try {
+        // Fetch full assessment data from backend
+        const assessmentData = await APIService.getAssessment(company.latestAssessment.project_id);
+
+        setCompanyName(company.companyName);
+        setReportData(assessmentData);
+        navigate('/dashboard');
+      } catch (error) {
+        console.error('Error loading assessment:', error);
+        alert('Error al cargar el assessment. Por favor, intenta de nuevo.');
+      }
+    } else {
+      // No assessments, go to new project
+      setCompanyName(company.companyName);
+      navigate('/newproject');
     }
   };
 
@@ -108,27 +105,37 @@ const ProjectPage = (props) => {
       </div>
       <div className="projectpage-main-content">
         <div className="projectpage-title-container">
-            <div className="projectpage-title">
-                <h1>Proyectos Recientes</h1>
-                <p>Aquí puedes ver tus proyectos recientes y crear nuevos.</p>
-            </div>
-            <button className="projectpage-create-button" onClick={() => navigate('/newproject')}>Crear nuevo proyecto</button>
+          <div className="projectpage-title">
+            <h1>Proyectos Recientes</h1>
+            <p>Aquí puedes ver tus proyectos recientes y crear nuevos.</p>
+          </div>
+          <button className="projectpage-create-button" onClick={() => navigate('/newproject')}>Crear nuevo proyecto</button>
         </div>
         <div className="projectpage-company-list">
-          {companies.map((company) => (
-            <div key={company.id} className="projectpage-company-item" onClick={() => handleCompanyClick(company)}>
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '40px' }}>
+              <p>Cargando proyectos...</p>
+            </div>
+          ) : companies.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '40px' }}>
+              <p>No tienes proyectos aún. ¡Crea tu primer proyecto!</p>
+            </div>
+          ) : (
+            companies.map((company) => (
+              <div key={company.id} className="projectpage-company-item" onClick={() => handleCompanyClick(company)}>
                 <div className="projectpage-company-info">
-                    <img alt="File Icon" src="/external/icon4638-y3ej.svg" className="projectpage-file-icon" />
-                    <div className="projectpage-company-details">
-                        <span className="projectpage-company-name">{company.companyName}</span>
-                        <span className="projectpage-company-meta">
-                            {company.assessments} assessments • Último {company.lastTest}
-                        </span>
-                    </div>
+                  <img alt="File Icon" src="/external/icon4638-y3ej.svg" className="projectpage-file-icon" />
+                  <div className="projectpage-company-details">
+                    <span className="projectpage-company-name">{company.companyName}</span>
+                    <span className="projectpage-company-meta">
+                      {company.assessments} assessments • Último {company.lastTest}
+                    </span>
+                  </div>
                 </div>
                 <img alt="Arrow Icon" src="/external/arrow14636-poci.svg" className="projectpage-arrow-icon" />
-            </div>
-          ))}
+              </div>
+            ))
+          )}
         </div>
       </div>
       <div className="projectpage-footer">

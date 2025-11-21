@@ -1857,3 +1857,41 @@
   font-weight: 500;
   line-height: 24px;
 }
+/* Navigation buttons styles */
+.recom-nav-buttons {
+    gap: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.recom-nav-button {
+    gap: 8px;
+    display: flex;
+    padding: 8px 16px;
+    align-items: center;
+    border: 1px solid var(--dl-color-default-neoblue);
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dl-color-default-neoblue);
+}
+
+.recom-nav-button:hover {
+    background-color: var(--dl-color-default-neoblue);
+    color: white;
+}
+
+.recom-nav-button:hover svg {
+    color: white;
+}
+
+.recom-nav-button-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--dl-color-default-neoblue);
+    transition: color 0.2s ease;
+}
