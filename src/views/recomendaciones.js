@@ -185,8 +185,8 @@ const Recomendaciones = (props) => {
                         onClick={() => handleAssessmentClick(assessment)}
                         style={{
                           cursor: 'pointer',
-                          backgroundColor: assessment.project_id === currentAssessmentId ? '#e0f7fa' : 'transparent',
-                          borderLeft: assessment.project_id === currentAssessmentId ? '3px solid #00bcd4' : 'none'
+                          backgroundColor: assessment.project_id === currentAssessmentId ? 'rgba(51, 51, 51, 0.08)' : 'transparent',
+                          borderLeft: assessment.project_id === currentAssessmentId ? '3px solid var(--dl-color-default-neoblue)' : 'none'
                         }}
                       >
                         <span className="recom-text15">

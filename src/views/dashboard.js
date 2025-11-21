@@ -17,6 +17,7 @@ const Dashboard = (props) => {
   const [assessments, setAssessments] = useState([]);
   const [loadingAssessments, setLoadingAssessments] = useState(false);
   const [currentAssessmentId, setCurrentAssessmentId] = useState(null);
+  const [expandedAccordions, setExpandedAccordions] = useState([]);
   const [showRadarChart, setShowRadarChart] = useState(true);
 
   useEffect(() => {
@@ -48,6 +49,14 @@ const Dashboard = (props) => {
 
     loadAssessments();
   }, [reportData, navigate, companyName]);
+
+  const toggleAccordion = (index) => {
+    setExpandedAccordions(prev =>
+      prev.includes(index)
+        ? prev.filter(i => i !== index)
+        : [...prev, index]
+    );
+  };
 
   const handleAssessmentClick = async (assessment) => {
     if (assessment.project_id === currentAssessmentId) return; // Already selected
@@ -82,8 +91,8 @@ const Dashboard = (props) => {
       {
         label: 'Puntaje de Madurez',
         data: puntajes_areas.map(area => area.puntaje),
-        backgroundColor: 'rgba(34, 205, 238, 0.2)',
-        borderColor: 'rgb(0, 0, 1)',
+        backgroundColor: 'rgba(19, 19, 178, 0.1)',
+        borderColor: 'var(--dl-color-default-neoblue)',
         borderWidth: 1,
       },
     ],
@@ -98,13 +107,30 @@ const Dashboard = (props) => {
         suggestedMin: 0,
         suggestedMax: 10,
         ticks: {
-          stepSize: 2
+          stepSize: 2,
+          font: {
+            family: 'Montserrat',
+            size: 12
+          }
+        },
+        pointLabels: {
+          font: {
+            family: 'Montserrat',
+            size: 14,
+            weight: 'bold'
+          }
         }
       },
     },
     plugins: {
       legend: {
         position: 'top',
+        labels: {
+          font: {
+            family: 'Montserrat',
+            size: 14
+          }
+        }
       },
     }
   };
@@ -210,8 +236,8 @@ const Dashboard = (props) => {
                         onClick={() => handleAssessmentClick(assessment)}
                         style={{
                           cursor: 'pointer',
-                          backgroundColor: assessment.project_id === currentAssessmentId ? '#e0f7fa' : 'transparent',
-                          borderLeft: assessment.project_id === currentAssessmentId ? '3px solid #00bcd4' : 'none'
+                          backgroundColor: assessment.project_id === currentAssessmentId ? 'rgba(51, 51, 51, 0.08)' : 'transparent',
+                          borderLeft: assessment.project_id === currentAssessmentId ? '3px solid var(--dl-color-default-neoblue)' : 'none'
                         }}
                       >
                         <span className="home-text15">
@@ -550,18 +576,39 @@ const Dashboard = (props) => {
 
                 <div className="home-frame1321316826">
                   <span className="home-text59">¿Qué implica cada nivel?</span>
+
                   <div className="home-accordion-list">
                     {niveles.map((nivel, index) => (
                       <div className="home-accordion-item1" key={index}>
-                        <div className="home-question1">
+                        <div
+                          className="home-question1"
+                          onClick={() => toggleAccordion(index)}
+                          style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                        >
                           <span className="home-text60">{nivel.nombre}</span>
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            style={{
+                              transform: expandedAccordions.includes(index) ? 'rotate(180deg)' : 'rotate(0deg)',
+                              transition: 'transform 0.3s ease'
+                            }}
+                          >
+                            <path d="M7 10l5 5 5-5z" fill="currentColor" />
+                          </svg>
                         </div>
-                        <div className="home-answer">
-                          <span className="home-text61">{nivel.descripcion}</span>
-                        </div>
+                        {expandedAccordions.includes(index) && (
+                          <div className="home-answer">
+                            <span className="home-text61">{nivel.descripcion}</span>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
+
+
                 </div>
 
                 <div className="home-container4">
