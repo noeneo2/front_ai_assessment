@@ -457,6 +457,13 @@ const Dashboard = (props) => {
                 <div className="home-scores-categories">
                   <div className="home-container3">
                     <span className="home-text34">Puntuación de madurez por áreas</span>
+
+                    <div className="home-container-radar" style={{ width: '500px', height: '500px' }}>
+                      <div className="home-frame-radar" style={{ width: '100%', height: '100%' }}>
+                        <Radar data={radarChartData} options={radarChartOptions} />
+                      </div>
+                    </div>
+
                     <div className="home-frame-cards-all">
                       <div className="home-frame-cards-row">
                         {puntajes_areas.slice(0, 3).map((area, index) => (
@@ -517,9 +524,8 @@ const Dashboard = (props) => {
                 <div className="home-container4">
                   <div className="home-dashboard-chart">
                     <span className="home-text65">Distribución de Niveles por área</span>
-                    <div className="home-container5" style={{ width: '500px', height: '500px' }}>
-                      <Radar data={radarChartData} options={radarChartOptions} />
-                    </div>
+
+
                   </div>
                 </div>
               </div>
