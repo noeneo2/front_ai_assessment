@@ -275,7 +275,7 @@
 
 .home-sidebar {
   display: flex;
-  flex: 0 0 265px;
+  flex: 0 0 25%;
   overflow: hidden;
   align-items: flex-start;
   flex-shrink: 0;
@@ -1495,7 +1495,6 @@
 .home-frame1321316826 {
   gap: 24px;
   display: flex;
-  padding: 32px 0;
   z-index: 7;
   align-self: stretch;
   align-items: flex-start;

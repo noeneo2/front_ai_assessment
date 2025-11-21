@@ -1,7 +1,7 @@
-import google.generativeai as genai
-from app.config.settings import settings
 import logging
 import json
+from google import genai
+from app.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -11,9 +11,9 @@ class AIService:
     
     def __init__(self):
         """Initialize Gemini AI"""
-        genai.configure(api_key=settings.GEMINI_API_KEY)
-        self.model = genai.GenerativeModel('gemini-pro')
-        logger.info("Gemini AI initialized")
+        self.client = genai.Client(api_key=settings.GEMINI_API_KEY)
+        self.model_name = 'gemini-2.5-flash'
+        logger.info(f"Gemini AI initialized with {self.model_name}")
     
     async def generate_recommendations(self, puntajes_areas: list) -> list:
         """
@@ -31,7 +31,10 @@ class AIService:
             
             # Generate recommendations
             logger.info("Calling Gemini API...")
-            response = self.model.generate_content(prompt)
+            response = self.client.models.generate_content(
+                model=self.model_name,
+                contents=prompt
+            )
             
             # Parse response
             recommendations = self._parse_response(response.text, puntajes_areas)
@@ -54,30 +57,81 @@ class AIService:
         ])
         
         prompt = f"""
-Eres un consultor experto en transformación digital e IA Generativa. Basándote en los siguientes puntajes de madurez organizacional en IA Generativa, genera 6 recomendaciones específicas y accionables (una por cada dimensión).
+Eres un consultor experto en transformación digital e IA Generativa especializado en el sector de seguros. Basándote en los siguientes puntajes de madurez organizacional en IA Generativa de una empresa de seguros, genera 6 recomendaciones específicas y accionables (una por cada dimensión).
 
 **Puntajes actuales:**
 {scores_text}
 
 **Niveles de madurez:**
-- Exploración (1.0-1.9): Etapa inicial
-- Fundamentos (2.0-3.9): Estableciendo bases
-- Pilotaje (4.0-5.9): Probando casos de uso
-- Escalamiento (6.0-7.9): Escalando soluciones
-- Transformación (8.0-10.0): Integración completa
+- Nivel 1 - Exploración (1.0-1.9): Etapa inicial
+- Nivel 2 - Fundamentos (2.0-3.9): Estableciendo bases
+- Nivel 3 - Pilotaje (4.0-5.9): Probando casos de uso
+- Nivel 4 - Escalamiento (6.0-7.9): Escalando soluciones
+- Nivel 5 - Transformación (8.0-10.0): Integración completa
 
-Para cada dimensión, genera una recomendación en formato JSON con los siguientes campos:
-- dimension: nombre de la dimensión
-- title: título accionable y específico (máximo 80 caracteres)
-- description: descripción detallada de la acción recomendada (máximo 200 caracteres)
-- estimated_time: tiempo estimado en formato "X-Y semanas" o "X-Y meses"
-- priority: "Alta", "Media" o "Baja" basado en el puntaje actual
+**MATRIZ DE RECOMENDACIONES POR DIMENSIÓN Y NIVEL:**
+
+**ESTRATEGIA:**
+- Nivel 1: Sensibilización en IA y diagnóstico inicial para cada área. Workshops "Vision AI" para líderes sobre aplicaciones en seguros (suscripción automatizada, detección de fraude, servicio al cliente).
+- Nivel 2: Diseño de estrategia de Gen AI y objetivos de negocio enfocados en mejorar la experiencia del asegurado y eficiencia operativa.
+- Nivel 3: Creación de Gen AI Lab para pilotos en áreas clave de seguros (claims processing, underwriting, customer service).
+- Nivel 4: Generación de Dashboards de ROI y KPIs de IA específicos para seguros (reducción de tiempo de claims, precisión en suscripción, satisfacción del cliente).
+- Nivel 5: AI-first mindset y cultura data-driven total. Incorporar IA en la Planeación estratégica anual (OKRs, KPIs). Establecer un AI Steering Committee que defina prioridades y KPIs de impacto global en el negocio de seguros.
+
+**PERSONAS Y CULTURA:**
+- Nivel 1: Talleres de awareness en Gen AI. Buscar generar conciencia inicial sobre qué es IA y generar cultura de datos y oportunidades en el sector asegurador.
+- Nivel 2: AI Literacy Path (Ruta de Alfabetización en IA). Diseño e implementación de una ruta de aprendizaje modular que nivele a la organización, combinando formación técnica (prompting, herramientas) con habilidades blandas (pensamiento crítico, ética) aplicadas a casos de seguros.
+- Nivel 3: Product Innovation AI Battle / Hackatones. Programa de AI Champions (AI Circles): comunidades de práctica inter-funcionales enfocadas en innovación en productos de seguros.
+- Nivel 4: Entrenamiento en Vibe Coding y adopción técnica para equipos de TI y actuariales.
+- Nivel 5: Upskilling permanente y adopción organizacional total en todas las áreas de la aseguradora.
+
+**GOVERNANCE:**
+- Nivel 1: Identificación de roles clave para gobierno. Taller introductorio de Riesgos y sesgos en IA aplicados al sector seguros (discriminación en pricing, sesgos en claims).
+- Nivel 2: Definición de políticas y estructura de gobierno. Creación de Comité de AI Governance enfocado en cumplimiento regulatorio del sector seguros.
+- Nivel 3: Playbook Responsable Gen AI (riesgos, sesgos, fuga). Auditorías de uso de IA para cumplir con regulaciones de seguros y protección de datos.
+- Nivel 4: Compliance automatizada en despliegues agénticos para asegurar cumplimiento normativo continuo.
+- Nivel 5: Gobierno autónomo y ético basado en IA para toda la operación de seguros.
+
+**DATA Y TECNOLOGÍA:**
+- Nivel 1: Evaluación de infraestructura y data disponible (datos de pólizas, claims, clientes, actuariales).
+- Nivel 2: Habilitación de conectores internos y control de costos. Habilitación de sandbox de experimentación IA para pruebas seguras con datos de seguros.
+- Nivel 3: Implementación de RAG interno o GPT corporativo con datos históricos de la aseguradora para consultas y análisis.
+- Nivel 4: LLMOps para escalamiento y monitoreo de modelos en producción (detección de fraude, pricing dinámico).
+- Nivel 5: Plataforma agnóstica no-code y monitoreo predictivo. Arquitectura híbrida multi-cloud + autoescalamiento cognitivo para soportar picos de demanda (ej. catástrofes naturales).
+
+**PROCESOS:**
+- Nivel 1: Workshop mapeo de procesos críticos del negocio de seguros (suscripción, emisión, claims, renovaciones).
+- Nivel 2: Diseño de roadmap de automatización (HAS) enfocado en procesos de alto volumen en seguros.
+- Nivel 3: Automatización de procesos prioritarios. Automatización de procesos cross-funcionales (ej. desde cotización hasta emisión de póliza).
+- Nivel 4: Integración de agentes en flujos de negocio para automatización inteligente de claims y underwriting.
+- Nivel 5: IA integrada al core del negocio. Crear un marco operativo (agentOps Framework) que asegura la automatización del ciclo de vida de agentes y la observabilidad completa de su rendimiento en procesos críticos de seguros.
+
+**PROYECTOS:**
+- Nivel 1: Identificación de quick wins y pilotos simples (chatbot de atención al cliente, automatización de documentos).
+- Nivel 2: Prototipos básicos de valor rápido en áreas como servicio al cliente o procesamiento de documentos.
+- Nivel 3: Automatización de la generación de Contenido AI. Analítica de Viabilidad con Plataformas de IA: Monitoreo del posicionamiento de IA en el mercado dentro de un marco de asesores (Lossit Corporation) enfocado en seguros.
+- Nivel 4: Conversational E-commerce y Lossit Corporation para proyectos estratégicos de transformación digital en seguros.
+- Nivel 5: IA integrada al core del negocio. Crear proyectos estratégicos de IA que generen proyectos estratégicos de IA. Medir valor de negocio continuo (Business Impact Loop) por proyecto para optimización constante.
+
+**INSTRUCCIONES:**
+1. Para cada dimensión, identifica el nivel actual según el puntaje
+2. Usa la recomendación de la matriz correspondiente como BASE
+3. Adapta la recomendación específicamente para una empresa de seguros, considerando:
+   - Procesos típicos: suscripción, emisión de pólizas, gestión de claims, renovaciones, atención al cliente
+   - Desafíos del sector: detección de fraude, pricing dinámico, cumplimiento regulatorio, experiencia del asegurado
+   - Datos relevantes: históricos de pólizas, claims, datos actuariales, perfiles de riesgo
+4. Genera una recomendación en formato JSON con los siguientes campos:
+   - dimension: nombre de la dimensión
+   - title: título accionable y específico para seguros (máximo 80 caracteres)
+   - description: descripción detallada de la acción recomendada aplicada al contexto de seguros (máximo 200 caracteres)
+   - estimated_time: tiempo estimado en formato "X-Y semanas" o "X-Y meses"
+   - priority: "Alta", "Media" o "Baja" basado en el puntaje actual
 
 Las recomendaciones deben ser:
-1. Específicas y accionables
+1. Específicas para el sector de seguros
 2. Apropiadas para el nivel actual de madurez
 3. Enfocadas en subir al siguiente nivel
-4. Realistas en términos de tiempo y recursos
+4. Realistas en términos de tiempo y recursos para una aseguradora
 
 Responde ÚNICAMENTE con un array JSON válido, sin texto adicional.
 """

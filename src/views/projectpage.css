@@ -31,26 +31,30 @@
   object-fit: cover;
 }
 
-.projectpage-header-button {
-  width: 120px;
-  height: 40px;
+.projectpage-nav-button {
+  gap: 8px;
   display: flex;
-  border-radius: 20px;
+  padding: 8px 16px;
   align-items: center;
-  justify-content: center;
-  background-color: #F2F2F2;
-}
-
-.projectpage-logout-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-}
-
-.projectpage-button-text {
-  color: var(--dl-color-default-black);
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 8px;
+  transition: opacity 0.2s ease;
+  font-family: Montserrat;
   font-size: 14px;
   font-weight: 600;
+  color: var(--dl-color-default-neoblue);
+}
+
+.projectpage-nav-button:hover {
+  opacity: 0.7;
+}
+
+.projectpage-nav-button-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--dl-color-default-neoblue);
 }
 
 .projectpage-main-content {

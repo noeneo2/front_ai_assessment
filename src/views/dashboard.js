@@ -124,6 +124,7 @@ const Dashboard = (props) => {
     },
     plugins: {
       legend: {
+        display: false,
         position: 'top',
         labels: {
           font: {
@@ -630,7 +631,7 @@ const Dashboard = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
