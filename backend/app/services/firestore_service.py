@@ -190,3 +190,47 @@ class FirestoreService:
         except Exception as e:
             logger.error(f"Error retrieving assessments: {str(e)}")
             raise
+    
+    def delete_company(self, user_id: str, company_name: str) -> None:
+        """
+        Delete a company and all its assessments
+        
+        Args:
+            user_id: Firebase user ID
+            company_name: Company name
+        """
+        try:
+            # Get all assessments for this company
+            assessments_ref = (
+                self.db.collection('users')
+                .document(user_id)
+                .collection('companies')
+                .document(company_name)
+                .collection('assessments')
+            )
+            
+            # Delete all assessments from hierarchical structure
+            assessment_ids = []
+            for assessment_doc in assessments_ref.stream():
+                assessment_ids.append(assessment_doc.id)
+                assessment_doc.reference.delete()
+            
+            # Delete assessments from global collection
+            for assessment_id in assessment_ids:
+                global_ref = self.db.collection('assessments').document(assessment_id)
+                global_ref.delete()
+            
+            # Delete company document
+            company_ref = (
+                self.db.collection('users')
+                .document(user_id)
+                .collection('companies')
+                .document(company_name)
+            )
+            company_ref.delete()
+            
+            logger.info(f"Company {company_name} and {len(assessment_ids)} assessments deleted successfully")
+            
+        except Exception as e:
+            logger.error(f"Error deleting company: {str(e)}")
+            raise

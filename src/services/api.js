@@ -111,6 +111,33 @@ class APIService {
             throw error;
         }
     }
+
+    /**
+     * Delete a company and all its assessments
+     * @param {string} companyName - Company name
+     * @param {string} userId - Firebase user ID
+     * @returns {Promise<Object>} Deletion result
+     */
+    async deleteCompany(companyName, userId) {
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/company/${companyName}?user_id=${userId}`,
+                {
+                    method: 'DELETE',
+                }
+            );
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Error deleting company');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error deleting company:', error);
+            throw error;
+        }
+    }
 }
 
 export default new APIService();

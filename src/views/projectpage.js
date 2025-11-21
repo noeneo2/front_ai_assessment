@@ -9,6 +9,7 @@ import './projectpage.css';
 const ProjectPage = (props) => {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openMenuId, setOpenMenuId] = useState(null);
   const navigate = useNavigate();
   const { setReportData, setCompanyName } = useContext(ReportContext);
 
@@ -90,6 +91,38 @@ const ProjectPage = (props) => {
     });
   };
 
+  const handleMenuToggle = (e, companyId) => {
+    e.stopPropagation(); // Prevent company click
+    setOpenMenuId(openMenuId === companyId ? null : companyId);
+  };
+
+  const handleDeleteProject = async (e, company) => {
+    e.stopPropagation();
+
+    if (window.confirm(`¿Estás seguro de que deseas eliminar el proyecto "${company.companyName}"? Esta acción no se puede deshacer.`)) {
+      try {
+        const user = auth.currentUser;
+        await APIService.deleteCompany(company.companyName, user.uid);
+
+        // Update local state
+        setCompanies(companies.filter(c => c.id !== company.id));
+        setOpenMenuId(null);
+
+        alert('Proyecto eliminado exitosamente');
+      } catch (error) {
+        console.error('Error deleting company:', error);
+        alert('Error al eliminar el proyecto. Por favor, intenta de nuevo.');
+      }
+    }
+  };
+
+  const handleAddAssessment = (e, company) => {
+    e.stopPropagation();
+    setCompanyName(company.companyName);
+    setOpenMenuId(null);
+    navigate('/landing');
+  };
+
   return (
     <div className="projectpage-container">
       <Helmet>
@@ -124,7 +157,7 @@ const ProjectPage = (props) => {
             companies.map((company) => (
               <div key={company.id} className="projectpage-company-item" onClick={() => handleCompanyClick(company)}>
                 <div className="projectpage-company-info">
-                  <img alt="File Icon" src="/external/icon4638-y3ej.svg" className="projectpage-file-icon" />
+                  <img alt="File Icon" src="/external/file-blank.svg" className="projectpage-file-icon" />
                   <div className="projectpage-company-details">
                     <span className="projectpage-company-name">{company.companyName}</span>
                     <span className="projectpage-company-meta">
@@ -132,7 +165,30 @@ const ProjectPage = (props) => {
                     </span>
                   </div>
                 </div>
-                <img alt="Arrow Icon" src="/external/arrow14636-poci.svg" className="projectpage-arrow-icon" />
+                <div className="projectpage-menu-container">
+                  <img
+                    alt="More Options"
+                    src="/external/three-dots-icon.svg"
+                    className="projectpage-arrow-icon"
+                    onClick={(e) => handleMenuToggle(e, company.id)}
+                  />
+                  {openMenuId === company.id && (
+                    <div className="projectpage-context-menu">
+                      <div
+                        className="projectpage-menu-item"
+                        onClick={(e) => handleAddAssessment(e, company)}
+                      >
+                        Agregar assessment
+                      </div>
+                      <div
+                        className="projectpage-menu-item projectpage-menu-item-delete"
+                        onClick={(e) => handleDeleteProject(e, company)}
+                      >
+                        Borrar proyecto
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             ))
           )}
