@@ -173,6 +173,36 @@ async def get_company_assessments(company_name: str, user_id: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.delete("/api/company/{company_name}")
+async def delete_company(company_name: str, user_id: str):
+    """
+    Delete a company and all its assessments
+    
+    Args:
+        company_name: Name of the company
+        user_id: Firebase user ID
+    
+    Returns:
+        Deletion confirmation
+    """
+    try:
+        logger.info(f"Deleting company: {company_name} for user: {user_id}")
+        
+        # Delete company and all assessments
+        firestore_service.delete_company(user_id, company_name)
+        
+        logger.info(f"Company {company_name} deleted successfully")
+        
+        return {
+            "status": "success",
+            "message": f"Company {company_name} and all its assessments have been deleted"
+        }
+        
+    except Exception as e:
+        logger.error(f"Error deleting company: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=settings.BACKEND_PORT)
