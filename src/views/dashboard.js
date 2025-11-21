@@ -246,7 +246,7 @@ const Dashboard = (props) => {
                       style={{
                         backgroundColor: categoria_general === 'Transformación' ? 'rgba(19, 19, 178, 0.1)' : 'transparent',
                         border: categoria_general === 'Transformación' ? '1px solid rgba(0, 0, 51, 1)' : '1px solid transparent',
-                        padding: '10px'
+
                       }}
                     >
                       <div className="home-frame1321316831">
@@ -257,7 +257,10 @@ const Dashboard = (props) => {
                           style={{ opacity: categoria_general === 'Transformación' ? 1 : 0.4 }}
                         />
                         <div className="home-categoria21">
-                          <span className="home-text20" style={{ fontWeight: categoria_general === 'Transformación' ? 'bold' : 'normal' }}>
+                          <span className="home-text20" style={{
+                            fontWeight: categoria_general === 'Transformación' ? 'bold' : 'normal',
+                            color: categoria_general === 'Transformación' ? 'var(--dl-color-default-neoblue)' : 'var(--dl-color-default-gris)'
+                          }}>
                             Transformación
                           </span>
                           <span className="home-text21">8.00 - 10.00</span>
@@ -277,7 +280,7 @@ const Dashboard = (props) => {
                       style={{
                         backgroundColor: categoria_general === 'Escalamiento' ? 'rgba(19, 19, 178, 0.1)' : 'transparent',
                         border: categoria_general === 'Escalamiento' ? '1px solid rgba(0, 0, 51, 1)' : '1px solid transparent',
-                        padding: '10px'
+
                       }}
                     >
                       <div className="home-frame1321316832">
@@ -288,7 +291,10 @@ const Dashboard = (props) => {
                           style={{ opacity: categoria_general === 'Escalamiento' ? 1 : 0.4 }}
                         />
                         <div className="home-categoria22">
-                          <span className="home-text22" style={{ fontWeight: categoria_general === 'Escalamiento' ? 'bold' : 'normal' }}>
+                          <span className="home-text22" style={{
+                            fontWeight: categoria_general === 'Escalamiento' ? 'bold' : 'normal'
+                            , color: categoria_general === 'Escalamiento' ? 'var(--dl-color-default-neoblue)' : 'var(--dl-color-default-gris)'
+                          }}>
                             Escalamiento
                           </span>
                           <span className="home-text23">6.00 - 7.99</span>
@@ -308,7 +314,7 @@ const Dashboard = (props) => {
                       style={{
                         backgroundColor: categoria_general === 'Pilotaje' ? 'rgba(19, 19, 178, 0.1)' : 'transparent',
                         border: categoria_general === 'Pilotaje' ? '1px solid rgba(0, 0, 51, 1)' : '1px solid transparent',
-                        padding: '10px'
+
                       }}
                     >
                       <div className="home-frame1321316833">
@@ -319,7 +325,10 @@ const Dashboard = (props) => {
                           style={{ opacity: categoria_general === 'Pilotaje' ? 1 : 0.4 }}
                         />
                         <div className="home-categoria23">
-                          <span className="home-text24" style={{ fontWeight: categoria_general === 'Pilotaje' ? 'bold' : 'normal' }}>
+                          <span className="home-text24" style={{
+                            fontWeight: categoria_general === 'Pilotaje' ? 'bold' : 'normal',
+                            color: categoria_general === 'Pilotaje' ? 'var(--dl-color-default-neoblue)' : 'var(--dl-color-default-gris)'
+                          }}>
                             Pilotaje
                           </span>
                           <span className="home-text25">4.00 - 5.99</span>
@@ -339,7 +348,7 @@ const Dashboard = (props) => {
                       style={{
                         backgroundColor: categoria_general === 'Fundamentos' ? 'rgba(19, 19, 178, 0.1)' : 'transparent',
                         border: categoria_general === 'Fundamentos' ? '1px solid rgba(0, 0, 51, 1)' : '1px solid transparent',
-                        padding: '10px'
+
                       }}
                     >
                       <div className="home-frame1321316834">
@@ -350,7 +359,10 @@ const Dashboard = (props) => {
                           style={{ opacity: categoria_general === 'Fundamentos' ? 1 : 0.4 }}
                         />
                         <div className="home-categoria1">
-                          <span className="home-text26" style={{ fontWeight: categoria_general === 'Fundamentos' ? 'bold' : 'normal' }}>
+                          <span className="home-text26" style={{
+                            fontWeight: categoria_general === 'Fundamentos' ? 'bold' : 'normal',
+                            color: categoria_general === 'Fundamentos' ? 'var(--dl-color-default-neoblue)' : 'var(--dl-color-default-gris)'
+                          }}>
                             Fundamentos
                           </span>
                           <span className="home-text27">2.00 - 3.99</span>
@@ -370,7 +382,7 @@ const Dashboard = (props) => {
                       style={{
                         backgroundColor: categoria_general === 'Exploración' ? 'rgba(19, 19, 178, 0.1)' : 'transparent',
                         border: categoria_general === 'Exploración' ? '1px solid rgba(0, 0, 51, 1)' : '1px solid transparent',
-                        padding: '10px'
+
                       }}
                     >
                       <div className="home-frame-exploracion-content">
@@ -381,7 +393,10 @@ const Dashboard = (props) => {
                           style={{ opacity: categoria_general === 'Exploración' ? 1 : 0.4 }}
                         />
                         <div className="home-categoria1">
-                          <span className="home-text26" style={{ fontWeight: categoria_general === 'Exploración' ? 'bold' : 'normal' }}>
+                          <span className="home-text26" style={{
+                            fontWeight: categoria_general === 'Exploración' ? 'bold' : 'normal',
+                            color: categoria_general === 'Exploración' ? 'var(--dl-color-default-neoblue)' : 'var(--dl-color-default-gris)'
+                          }}>
                             Exploración
                           </span>
                           <span className="home-text27">0.00 - 1.99</span>
@@ -394,9 +409,36 @@ const Dashboard = (props) => {
                         style={{ opacity: categoria_general === 'Exploración' ? 1 : 0.3 }}
                       />
                     </div>
-                    <img src="/external/rectangle44635-jb8p-200w.png" alt="Rectangle4" className={`home-rectangle4 categoria-${categoria_estilo}`} />
+                    <img
+                      src="/external/rectangle44635-jb8p-200w.png"
+                      alt="Rectangle4"
+                      className={`home-rectangle4 categoria-${categoria_estilo}`}
+                      style={{
+                        left: categoria_general === 'Exploración' ? '302px' :
+                          categoria_general === 'Fundamentos' ? '407px' :
+                            categoria_general === 'Pilotaje' ? '687px' :
+                              categoria_general === 'Escalamiento' ? '827px' :
+                                categoria_general === 'Transformación' ? '902px' : '302px'
+                      }}
+                    />
                     <img src="/external/vector14635-go29.svg" alt="Vector1" className="home-vector1" />
-                    <img src="/external/ellipse44635-ujdp-200h.png" alt="Ellipse4" className={`home-ellipse4 categoria-${categoria_estilo}`} />
+                    <img
+                      src="/external/ellipse44635-ujdp-200h.png"
+                      alt="Ellipse4"
+                      className={`home-ellipse4 categoria-${categoria_estilo}`}
+                      style={{
+                        top: categoria_general === 'Exploración' ? '380px' :
+                          categoria_general === 'Fundamentos' ? '295px' :
+                            categoria_general === 'Pilotaje' ? '215px' :
+                              categoria_general === 'Escalamiento' ? '125px' :
+                                categoria_general === 'Transformación' ? '40px' : '380px',
+                        left: categoria_general === 'Exploración' ? '325px' :
+                          categoria_general === 'Fundamentos' ? '430px' :
+                            categoria_general === 'Pilotaje' ? '710px' :
+                              categoria_general === 'Escalamiento' ? '850px' :
+                                categoria_general === 'Transformación' ? '925px' : '325px'
+                      }}
+                    />
                   </div>
                   <div className="home-tooltip">
                     <img src="/external/buttoniconhelpcircle4635-onsr.svg" alt="ButtonIconhelpcircle" className="home-button-iconhelpcircle" />
