@@ -17,6 +17,7 @@ const Dashboard = (props) => {
   const [assessments, setAssessments] = useState([]);
   const [loadingAssessments, setLoadingAssessments] = useState(false);
   const [currentAssessmentId, setCurrentAssessmentId] = useState(null);
+  const [showRadarChart, setShowRadarChart] = useState(true);
 
   useEffect(() => {
     if (!reportData) {
@@ -456,52 +457,94 @@ const Dashboard = (props) => {
 
                 <div className="home-scores-categories">
                   <div className="home-container3">
-                    <span className="home-text34">Puntuación de madurez por áreas</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                      <span className="home-text34">Puntuación de madurez por áreas</span>
 
-                    <div className="home-container-radar" style={{ width: '500px', height: '500px' }}>
-                      <div className="home-frame-radar" style={{ width: '100%', height: '100%' }}>
-                        <Radar data={radarChartData} options={radarChartOptions} />
+                      <div className="view-switch" style={{ display: 'flex', gap: '4px', backgroundColor: '#f0f0f0', borderRadius: '8px', padding: '4px' }}>
+                        <button
+                          onClick={() => setShowRadarChart(true)}
+                          style={{
+                            padding: '8px 12px',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            backgroundColor: showRadarChart ? 'var(--dl-color-default-neoblue)' : 'transparent',
+                            transition: 'background-color 0.3s ease'
+                          }}
+                        >
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill={showRadarChart ? '#ffffff' : '#666666'}>
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                          </svg>
+                        </button>
+
+                        <button
+                          onClick={() => setShowRadarChart(false)}
+                          style={{
+                            padding: '8px 12px',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            backgroundColor: !showRadarChart ? 'var(--dl-color-default-neoblue)' : 'transparent',
+                            transition: 'background-color 0.3s ease'
+                          }}
+                        >
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill={!showRadarChart ? '#ffffff' : '#666666'}>
+                            <path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm11 0h7v7h-7v-7z" />
+                          </svg>
+                        </button>
                       </div>
                     </div>
 
-                    <div className="home-frame-cards-all">
-                      <div className="home-frame-cards-row">
-                        {puntajes_areas.slice(0, 3).map((area, index) => (
-                          <div className="home-card-sub-score1" key={index}>
-                            <div className="home-number-card1">
-                              <span className="home-text35">{area.nombre}</span>
-                              <div className="home-numberdetail1">
-                                <div className="home-frame13213168111">
-                                  <span className="home-text36">{area.puntaje.toFixed(2)}</span>
-                                  <div className="home-frame13213168301">
-                                    <span className="home-text37">+3%</span>
+
+                    {showRadarChart ? (
+                      <div className="home-container-radar" style={{ width: '500px', height: '500px' }}>
+                        <div className="home-frame-radar" style={{ width: '100%', height: '100%' }}>
+                          <Radar data={radarChartData} options={radarChartOptions} />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="home-frame-cards-all">
+                        <div className="home-frame-cards-row">
+                          {puntajes_areas.slice(0, 3).map((area, index) => (
+                            <div className="home-card-sub-score1" key={index}>
+                              <div className="home-number-card1">
+                                <span className="home-text35">{area.nombre}</span>
+                                <div className="home-numberdetail1">
+                                  <div className="home-frame13213168111">
+                                    <span className="home-text36">{area.puntaje.toFixed(2)}</span>
+                                    <div className="home-frame13213168301">
+                                      <span className="home-text37">+3%</span>
+                                    </div>
                                   </div>
+                                  <span className="home-text38">{area.nivel}</span>
                                 </div>
-                                <span className="home-text38">{area.nivel}</span>
                               </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="home-frame-cards-row">
-                        {puntajes_areas.slice(3, 6).map((area, index) => (
-                          <div className="home-card-sub-score1" key={index + 3}>
-                            <div className="home-number-card1">
-                              <span className="home-text35">{area.nombre}</span>
-                              <div className="home-numberdetail1">
-                                <div className="home-frame13213168111">
-                                  <span className="home-text36">{area.puntaje.toFixed(2)}</span>
-                                  <div className="home-frame13213168301">
-                                    <span className="home-text37">+3%</span>
+                          ))}
+                        </div>
+
+                        <div className="home-frame-cards-row">
+                          {puntajes_areas.slice(3, 6).map((area, index) => (
+                            <div className="home-card-sub-score1" key={index + 3}>
+                              <div className="home-number-card1">
+                                <span className="home-text35">{area.nombre}</span>
+                                <div className="home-numberdetail1">
+                                  <div className="home-frame13213168111">
+                                    <span className="home-text36">{area.puntaje.toFixed(2)}</span>
+                                    <div className="home-frame13213168301">
+                                      <span className="home-text37">+3%</span>
+                                    </div>
                                   </div>
+                                  <span className="home-text38">{area.nivel}</span>
                                 </div>
-                                <span className="home-text38">{area.nivel}</span>
                               </div>
                             </div>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
+
                       </div>
-                    </div>
+                    )}
+
                   </div>
                 </div>
 
