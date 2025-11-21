@@ -14,7 +14,6 @@ import Dashboard from './views/dashboard';
 import Landing from './views/landing';
 import Subiendo from './views/subiendo';
 import Cargando from './views/cargando';
-import Login from './views/login';
 import NotFound from './views/not-found';
 import ProjectPage from './views/projectpage';
 import NewProject from './views/newproject';
@@ -32,10 +31,8 @@ const App = () => {
           <Route path="/cargando" element={<Cargando />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/recomendaciones" element={<Recom />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/projectpage" element={<ProjectPage />} />
           <Route path="/newproject" element={<NewProject />} />
-          <Route path="/home" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </ReportProvider>

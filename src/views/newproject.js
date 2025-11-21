@@ -9,7 +9,7 @@ const NewProject = (props) => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
     if (!selectedFile) {
       return;
@@ -20,16 +20,18 @@ const NewProject = (props) => {
       return;
     }
 
+    // Store file info in context
     setFile(selectedFile);
     setFileName(selectedFile.name);
 
+    // Navigate to subiendo page
     navigate('/subiendo');
   };
 
   const handleUploadAreaClick = () => {
     fileInputRef.current.click();
   };
-  
+
   const handleCompanyNameChange = (event) => {
     setCompanyName(event.target.value);
   };
@@ -39,10 +41,10 @@ const NewProject = (props) => {
       <Helmet>
         <title>Nuevo Proyecto - Madurez Organizacional Gen AI</title>
       </Helmet>
-      
-      <input 
-        type="file" 
-        ref={fileInputRef} 
+
+      <input
+        type="file"
+        ref={fileInputRef}
         onChange={handleFileChange}
         style={{ display: 'none' }}
         accept=".xlsx, .xls"
@@ -58,7 +60,7 @@ const NewProject = (props) => {
               alt="Logo Neo"
             />
           </header>
-          
+
           <main className="newproject-main-content">
             <div className="newproject-upload-module">
               <div className="newproject-title">
@@ -66,7 +68,7 @@ const NewProject = (props) => {
                   Crear nuevo proyecto
                 </span>
               </div>
-              
+
               <div className="newproject-steps-container">
                 <span className="newproject-step-title">
                   Paso 1: Ingresa el nombre de la empresa
@@ -85,17 +87,17 @@ const NewProject = (props) => {
                 </span>
               </div>
 
-              <div className="newproject-upload" onClick={handleUploadAreaClick} style={{cursor: 'pointer'}}>
-                
+              <div className="newproject-upload" onClick={handleUploadAreaClick} style={{ cursor: 'pointer' }}>
+
                 <div className="newproject-frame17">
                   <div className="newproject-group3">
-                    <img alt="VectorI281" src="/external/vectori281-d2v4.svg" className="newproject-vector001"/>
+                    <img alt="VectorI281" src="/external/vectori281-d2v4.svg" className="newproject-vector001" />
                   </div>
                   <div className="newproject-frame16">
                     <span className="newproject-text2">
                       Seleccione un archivo o arrástrelo aquí.
                     </span>
-                     <span className="newproject-text-subtitle">
+                    <span className="newproject-text-subtitle">
                       Archivo de Excel de hasta 50 MB
                     </span>
                   </div>
@@ -106,12 +108,12 @@ const NewProject = (props) => {
               </div>
             </div>
           </main>
-          
+
           <footer className="newproject-footer">
             <img
-            className="newproject-footer-logo"
-            src="/external/Logo_negro_NEO_footer.svg"
-            alt="Logo Neo"
+              className="newproject-footer-logo"
+              src="/external/Logo_negro_NEO_footer.svg"
+              alt="Logo Neo"
             />
           </footer>
         </div>
