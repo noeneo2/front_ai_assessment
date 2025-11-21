@@ -349,13 +349,15 @@
 }
 
 .recom-frame1321316839 {
-  gap: 32px;
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .recom-frame1321316842 {
   gap: 8px;
+  width: 45%;
   display: flex;
   padding: 16px 24px;
   align-items: flex-start;
@@ -429,6 +431,7 @@
 
 .recom-frame1321316843 {
   gap: 8px;
+  width: 45%;
   display: flex;
   padding: 16px 24px;
   align-items: flex-start;
@@ -555,20 +558,16 @@
   font-weight: 400;
 }
 
-.recom-card-recommendation1,
-.recom-card-recommendation2,
-.recom-card-recommendation3 {
+.recom-card-recommendation1 {
   gap: 24px;
-
-  height: 172px;
+  width: 100%;
+  height: auto;
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
 
-.recom-number-card10,
-.recom-number-card11,
-.recom-number-card12 {
+.recom-number-card10 {
   gap: 16px;
   width: 100%;
   display: flex;
