@@ -118,37 +118,67 @@ const Dashboard = (props) => {
           <div className="home-main-content1">
             <div className="home-header-dashboard">
               <div className="home-header-frame">
-                <div className="home-titleand-status-container">
-                  <div className="home-title-container">
-                    <span className="home-text10">
-                      {companyName}
-                    </span>
+
+                <div className="home-header-1">
+                  <div className="home-nav-buttons">
+                    <button className="home-nav-button" onClick={() => navigate('/projectpage')}>
+                      <svg className="home-nav-button-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" fill="currentColor" />
+                      </svg>
+                      <span>Todos los proyectos</span>
+                    </button>
+                    <button className="home-nav-button" onClick={async () => {
+                      try {
+                        await auth.signOut();
+                        navigate('/');
+                      } catch (error) {
+                        console.error('Error al cerrar sesión:', error);
+                      }
+                    }}>
+                      <svg className="home-nav-button-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z" fill="currentColor" />
+                      </svg>
+                      <span>Logout</span>
+                    </button>
                   </div>
-                  <div className="home-frame1321316829">
-                    <div className="home-project-status">
-                      <img
-                        src="/external/statusdot4628-j2h5-200h.png"
-                        alt="StatusDot"
-                        className="home-status-dot"
-                      />
-                      <span className="home-text11">Análisis éxitoso</span>
+                </div>
+
+                <div className="home-header-2">
+                  <div className="home-titleand-status-container">
+                    <div className="home-title-container">
+                      <span className="home-text10">
+                        {companyName}
+                      </span>
                     </div>
+                    <div className="home-frame1321316829">
+                      <div className="home-project-status">
+                        <img
+                          src="/external/statusdot4628-j2h5-200h.png"
+                          alt="StatusDot"
+                          className="home-status-dot"
+                        />
+                        <span className="home-text11">Análisis éxitoso</span>
+                      </div>
+                      <img
+                        src="/external/iconrefresh4611-0oe.svg"
+                        alt="Iconrefresh"
+                        className="recom-iconrefresh"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="home-frame15">
                     <img
-                      src="/external/iconrefresh4611-0oe.svg"
-                      alt="Iconrefresh"
-                      className="recom-iconrefresh"
+                      src="/external/icondownload4611-c77h.svg"
+                      alt="Icondownload"
+                      className="home-icondownload"
                     />
+                    <span className="home-text12">Descargar PDF</span>
                   </div>
                 </div>
-                <div className="home-frame15">
-                  <img
-                    src="/external/icondownload4611-c77h.svg"
-                    alt="Icondownload"
-                    className="home-icondownload"
-                  />
-                  <span className="home-text12">Descargar PDF</span>
-                </div>
+
               </div>
+
               <div className="home-tabs">
                 <div className="home-tabitem1">
                   <span className="home-text13">Resultados</span>
@@ -158,6 +188,8 @@ const Dashboard = (props) => {
                 </Link>
               </div>
             </div>
+
+
             <div className="home-container2">
               <div className="home-sidebar">
                 <div className="home-side-panel-menu">
