@@ -614,7 +614,7 @@ const Dashboard = (props) => {
 
                 <div className="home-container4">
                   <div className="home-dashboard-chart">
-                    <span className="home-text65">Distribución de Niveles por área</span>
+                    {/*<span className="home-text65">Distribución de Niveles por área</span>*/}
 
 
                   </div>

@@ -54,7 +54,7 @@
 
 /* Header sections styling for dashboard */
 .home-header-frame {
-  gap: 16px;
+  gap: 30px;
   display: flex;
   align-self: stretch;
   align-items: flex-start;
