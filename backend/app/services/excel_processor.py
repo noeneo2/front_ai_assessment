@@ -10,15 +10,15 @@ logger = logging.getLogger(__name__)
 class ExcelProcessor:
     """Service to process Excel assessment files"""
     
-    # Column mappings for the 60 questions (T to CA)
+    # Column mappings for the 60 questions (AB to CI)
     # Each dimension has 10 questions
     DIMENSION_COLUMNS = {
-        "Personas y Cultura": list(range(19, 29)),  # Columns T-AC (indices 19-28)
-        "Data & Tecnología": list(range(29, 39)),   # Columns AD-AM (indices 29-38)
-        "Procesos": list(range(39, 49)),            # Columns AN-AW (indices 39-48)
-        "Governance": list(range(49, 59)),          # Columns AX-BG (indices 49-58)
-        "Proyectos": list(range(59, 69)),           # Columns BH-BQ (indices 59-68)
-        "Estrategia": list(range(69, 79)),          # Columns BR-CA (indices 69-78)
+        "Personas y Cultura": list(range(27, 37)),  # Columns AB-AK (indices 27-36)
+        "Data & Tecnología": list(range(37, 47)),   # Columns AL-AU (indices 37-46)
+        "Procesos": list(range(47, 57)),            # Columns AV-BE (indices 47-56)
+        "Governance": list(range(57, 67)),          # Columns BF-BO (indices 57-66)
+        "Proyectos": list(range(67, 77)),           # Columns BP-BY (indices 67-76)
+        "Estrategia": list(range(77, 87)),          # Columns BZ-CI (indices 77-86)
     }
     
     DATE_COLUMN = 2  # Column C (index 2)
