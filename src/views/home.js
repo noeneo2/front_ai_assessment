@@ -233,6 +233,87 @@ const Home = (props) => {
           </div>
         </div>
       </section>
+      {/* Process Steps Section */}
+      <section className="home-process">
+        <div className="home-process-content">
+          <h2 className="home-process-title">Un proceso simple para un diagnóstico completo</h2>
+          <p className="home-process-subtitle">
+            Sigue estos pasos para obtener tu análisis de madurez de IA.
+          </p>
+
+          <div className="home-steps-container">
+            {/* Step 1 */}
+            <div className="home-step">
+              <div className="home-step-number">1</div>
+              <div className="home-step-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" stroke="var(--dl-color-default-neoblue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <h3 className="home-step-title">Ingresa a alchemer</h3>
+              <p className="home-step-description">
+                Accede a la plataforma y selecciona la evaluación.
+              </p>
+            </div>
+
+            {/* Step 2 */}
+            <div className="home-step">
+              <div className="home-step-number">2</div>
+              <div className="home-step-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke="var(--dl-color-default-neoblue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <h3 className="home-step-title">Descarga el archivo</h3>
+              <p className="home-step-description">
+                Exporta los resultados en formato CSV o Excel.
+              </p>
+            </div>
+
+            {/* Step 3 */}
+            <div className="home-step">
+              <div className="home-step-number">3</div>
+              <div className="home-step-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke="var(--dl-color-default-neoblue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <h3 className="home-step-title">Sube tu archivo</h3>
+              <p className="home-step-description">
+                Carga el documento en nuestra plataforma segura.
+              </p>
+            </div>
+
+            {/* Step 4 */}
+            <div className="home-step">
+              <div className="home-step-number">4</div>
+              <div className="home-step-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke="var(--dl-color-default-neoblue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <h3 className="home-step-title">Procesamiento automático</h3>
+              <p className="home-step-description">
+                Calculamos el scoring para cada dimensión clave.
+              </p>
+            </div>
+
+            {/* Step 5 */}
+            <div className="home-step">
+              <div className="home-step-number">5</div>
+              <div className="home-step-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z" fill="var(--dl-color-default-neoblue)" />
+                </svg>
+              </div>
+              <h3 className="home-step-title">Generación del dashboard</h3>
+              <p className="home-step-description">
+                Visualiza tus brechas, insights y oportunidades.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
