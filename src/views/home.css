@@ -112,7 +112,7 @@
 
 /* Features Section */
 .home-features {
-  padding: 60px 48px 80px;
+  padding: 60px 200px 80px;
   background-color: #f8f9fa;
 }
 
@@ -205,7 +205,7 @@
 
 /* Dimensions Section */
 .home-dimensions {
-  padding: 80px 48px 100px;
+  padding: 80px 200px 100px;
   background-color: #f0f2f5;
 }
 
@@ -247,7 +247,7 @@
 
 /* Process Steps Section */
 .home-process {
-  padding: 80px 48px;
+  padding: 80px 200px;
   background-color: #ffffff;
 }
 
@@ -326,6 +326,30 @@
   color: var(--dl-color-default-neoblue);
   margin: 0;
   opacity: 0.7;
+}
+
+/* Final CTA Section */
+.home-final-cta {
+  padding: 80px 200px;
+  background-color: #f4f6fa;
+  text-align: center;
+}
+
+.home-final-cta-content {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-final-cta-title {
+  font-family: 'PT Serif', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--dl-color-default-neoblue);
+  margin: 0 0 40px 0;
+  line-height: 1.2;
 }
 
 /* Responsive Design */
@@ -407,5 +431,13 @@
 
   .home-step-title {
     font-size: 16px;
+  }
+
+  .home-final-cta {
+    padding: 60px 24px;
+  }
+
+  .home-final-cta-title {
+    font-size: 36px;
   }
 }

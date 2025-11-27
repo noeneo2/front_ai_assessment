@@ -6,6 +6,25 @@ import { auth, db } from '../firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 import './home.css';
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Radar } from 'react-chartjs-2';
+
+ChartJS.register(
+  RadialLinearScale,
+  PointElement,
+  LineElement,
+  Filler,
+  Tooltip,
+  Legend
+);
 
 const Home = (props) => {
   const navigate = useNavigate();
@@ -82,6 +101,55 @@ const Home = (props) => {
 
       setLoading(false);
     }
+  };
+
+  // Fixed data for Home Radar Chart
+  const radarChartData = {
+    labels: ['Estrategia', 'Procesos', 'Governance', 'Personas y Cultura', 'Data & Tecnología', 'Proyectos'],
+    datasets: [
+      {
+        label: 'Nivel de Madurez',
+        data: [3.5, 4.0, 3.0, 4.5, 3.8, 4.2], // Example high scores
+        backgroundColor: 'rgba(0, 0, 51, 0.2)',
+        borderColor: '#000033',
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const radarChartOptions = {
+    scales: {
+      r: {
+        angleLines: {
+          display: true,
+          color: '#e0e0e0',
+        },
+        suggestedMin: 0,
+        suggestedMax: 5,
+        ticks: {
+          stepSize: 1,
+          backdropColor: 'transparent',
+          font: {
+            family: 'Montserrat',
+            size: 10
+          }
+        },
+        pointLabels: {
+          font: {
+            size: 11,
+            family: 'Montserrat',
+            weight: 'bold'
+          },
+          color: '#333'
+        }
+      },
+    },
+    plugins: {
+      legend: {
+        display: false // Hide legend for cleaner look on home
+      }
+    },
+    maintainAspectRatio: false
   };
 
   return (
@@ -202,38 +270,13 @@ const Home = (props) => {
 
           <div className="home-radar-container">
             {/* Radar Chart - Simplified representation */}
-            <svg className="home-radar-chart" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-              {/* Background circles */}
-              <circle cx="200" cy="200" r="150" fill="none" stroke="#e5e7eb" strokeWidth="1" />
-              <circle cx="200" cy="200" r="120" fill="none" stroke="#e5e7eb" strokeWidth="1" />
-              <circle cx="200" cy="200" r="90" fill="none" stroke="#e5e7eb" strokeWidth="1" />
-              <circle cx="200" cy="200" r="60" fill="none" stroke="#e5e7eb" strokeWidth="1" />
-              <circle cx="200" cy="200" r="30" fill="none" stroke="#e5e7eb" strokeWidth="1" />
-
-              {/* Axes */}
-              <line x1="200" y1="200" x2="200" y2="50" stroke="#e5e7eb" strokeWidth="1" />
-              <line x1="200" y1="200" x2="330" y2="125" stroke="#e5e7eb" strokeWidth="1" />
-              <line x1="200" y1="200" x2="330" y2="275" stroke="#e5e7eb" strokeWidth="1" />
-              <line x1="200" y1="200" x2="200" y2="350" stroke="#e5e7eb" strokeWidth="1" />
-              <line x1="200" y1="200" x2="70" y2="275" stroke="#e5e7eb" strokeWidth="1" />
-              <line x1="200" y1="200" x2="70" y2="125" stroke="#e5e7eb" strokeWidth="1" />
-
-              {/* Data polygon */}
-              <polygon
-                points="200,80 290,140 290,260 200,310 110,260 110,140"
-                fill="rgba(0, 0, 51, 0.2)"
-                stroke="var(--dl-color-default-neoblue)"
-                strokeWidth="2"
+            {/* Radar Chart - Dynamic with fixed data */}
+            <div style={{ width: '100%', height: '400px', display: 'flex', justifyContent: 'center' }}>
+              <Radar
+                data={radarChartData}
+                options={radarChartOptions}
               />
-
-              {/* Labels */}
-              <text x="200" y="35" textAnchor="middle" fontSize="14" fontFamily="Montserrat" fill="var(--dl-color-default-neoblue)">Estrategia</text>
-              <text x="355" y="125" textAnchor="start" fontSize="14" fontFamily="Montserrat" fill="var(--dl-color-default-neoblue)">Procesos</text>
-              <text x="355" y="285" textAnchor="start" fontSize="14" fontFamily="Montserrat" fill="var(--dl-color-default-neoblue)">Governance</text>
-              <text x="200" y="375" textAnchor="middle" fontSize="14" fontFamily="Montserrat" fill="var(--dl-color-default-neoblue)">Cultura</text>
-              <text x="45" y="285" textAnchor="end" fontSize="14" fontFamily="Montserrat" fill="var(--dl-color-default-neoblue)">Tecnología</text>
-              <text x="45" y="125" textAnchor="end" fontSize="14" fontFamily="Montserrat" fill="var(--dl-color-default-neoblue)">Proyectos</text>
-            </svg>
+            </div>
           </div>
         </div>
       </section>
@@ -316,6 +359,22 @@ const Home = (props) => {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="home-final-cta">
+        <div className="home-final-cta-content">
+          <h2 className="home-final-cta-title">
+            Transforma tu organización hacia un<br />modelo AI-ready
+          </h2>
+          <button
+            onClick={handleGoogleLogin}
+            className="home-cta-button"
+            disabled={loading}
+          >
+            {loading ? 'Autenticando...' : 'Subir archivo y obtener diagnóstico'}
+          </button>
         </div>
       </section>
     </div>
