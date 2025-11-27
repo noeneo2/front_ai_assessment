@@ -112,12 +112,28 @@ class ExcelProcessor:
             # Get all responses for this dimension across all rows (employees)
             dimension_data = df.iloc[:, column_indices]
             
+            # Force conversion to numeric, coercing errors to NaN
+            # This handles cases where cells might contain text or be formatted as strings
+            dimension_data_numeric = dimension_data.apply(pd.to_numeric, errors='coerce')
+            
             # Calculate average score across all employees and questions
             # Each question is 1-5, we sum 10 questions and divide by 5 to get 1-10 scale
-            total_sum = dimension_data.sum().sum()
-            total_count = dimension_data.count().sum()
+            total_sum = dimension_data_numeric.sum().sum()
+            total_count = dimension_data_numeric.count().sum()
             
+            # DEBUG LOGGING
+            if column_indices[0] == 27:  # Only for Personas y Cultura
+                logger.info(f"--- DEBUG PERSONAS Y CULTURA ---")
+                logger.info(f"Column indices: {column_indices}")
+                logger.info(f"Column names from DF: {dimension_data.columns.tolist()}")
+                logger.info(f"First row raw values: {dimension_data.iloc[0].tolist() if not dimension_data.empty else 'Empty'}")
+                logger.info(f"First row numeric values: {dimension_data_numeric.iloc[0].tolist() if not dimension_data_numeric.empty else 'Empty'}")
+                logger.info(f"Total count of valid numbers: {total_count}")
+                logger.info(f"Total sum: {total_sum}")
+                logger.info(f"--------------------------------")
+
             if total_count == 0:
+                logger.warning(f"No valid data found for columns {column_indices}")
                 return 0.0
             
             # Average score per question
@@ -159,22 +175,22 @@ class ExcelProcessor:
         return [
             {
                 "nombre": "Exploración (1.0 - 1.9)",
-                "descripcion": "Etapa inicial de exploración y experimentación con IA Generativa."
+                "descripcion": "En esta fase inicial, la organización navega impulsada por la curiosidad individual, donde los empleados experimentan de forma descentralizada con herramientas públicas sin una estrategia corporativa formal. El objetivo principal es familiarizarse con los conceptos básicos y el potencial de la tecnología, a menudo careciendo de controles estrictos de seguridad o gobernanza de datos."
             },
             {
                 "nombre": "Fundamentos (2.0 - 3.9)",
-                "descripcion": "Establecimiento de bases y capacidades fundamentales en IA Generativa."
+                "descripcion": "Aquí la empresa comienza a profesionalizar su enfoque, estableciendo los marcos críticos de gobernanza, seguridad y ética necesarios para un uso corporativo seguro. Se definen las arquitecturas técnicas preliminares y se inician programas de alfabetización en datos e IA para alinear el conocimiento de los equipos clave. El foco deja de ser la mera experimentación libre para centrarse en preparar el terreno operativo y estratégico que soportará los futuros desarrollos."
             },
             {
                 "nombre": "Pilotaje (4.0 - 5.9)",
-                "descripcion": "Implementación de pilotos y casos de uso específicos."
+                "descripcion": "La organización pasa de la teoría a la práctica ejecutando Pruebas de Concepto (PoCs) y Productos Mínimos Viables en áreas de negocio seleccionadas por su alto impacto. Se busca validar hipótesis concretas y medir el retorno de inversión (ROI) en entornos controlados para justificar una adopción mayor ante la directiva."
             },
             {
                 "nombre": "Escalamiento (6.0 - 7.9)",
-                "descripcion": "Escalamiento de soluciones a múltiples áreas de la organización."
+                "descripcion": "Las soluciones que resultaron exitosas en la fase piloto se industrializan y expanden a múltiples departamentos, integrándose profundamente en los flujos de trabajo y sistemas empresariales (como ERP o CRM). Se establecen procesos robustos de operaciones de IA (LLMOps) para gestionar el mantenimiento y monitoreo de los modelos a gran escala. La IA Generativa deja de ser una novedad experimental para convertirse en una herramienta estandarizada de productividad masiva en toda la compañía."
             },
             {
                 "nombre": "Transformación (8.0 - 10.0)",
-                "descripcion": "Transformación completa con IA Generativa integrada en toda la operación."
+                "descripcion": "En este nivel máximo, la IA Generativa está completamente integrada en el ADN de la empresa, llegando a redefinir productos, servicios e incluso el modelo de negocio completo. La organización opera con una mentalidad AI First, logrando una simbiosis fluida entre el talento humano y la automatización inteligente en todas las operaciones diarias. Se alcanza una ventaja competitiva disruptiva, donde la innovación es continua y la tecnología impulsa la estrategia corporativa global."
             }
         ]

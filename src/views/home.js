@@ -15,32 +15,36 @@ const Home = (props) => {
   // Listen for authentication state changes
   useEffect(() => {
     console.log("Setting up auth state listener...");
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log("User authenticated:", user.email);
 
-        // Save user to Firestore if needed
-        try {
-          const userRef = doc(db, 'users', user.uid);
-          const docSnap = await getDoc(userRef);
-
-          if (!docSnap.exists()) {
-            console.log("Creating new user in Firestore...");
-            await setDoc(userRef, {
-              displayName: user.displayName,
-              email: user.email,
-            });
-            console.log("User saved to Firestore");
-          } else {
-            console.log("User already exists in Firestore");
-          }
-        } catch (firestoreError) {
-          console.error("Firestore error:", firestoreError);
-        }
-
-        // Navigate to project page
+        // Navigate immediately to project page
         console.log("Navigating to /projectpage...");
         navigate('/projectpage');
+
+        // Save user to Firestore in background (non-blocking)
+        const saveUserToFirestore = async () => {
+          try {
+            const userRef = doc(db, 'users', user.uid);
+            const docSnap = await getDoc(userRef);
+
+            if (!docSnap.exists()) {
+              console.log("Creating new user in Firestore...");
+              await setDoc(userRef, {
+                displayName: user.displayName,
+                email: user.email,
+              });
+              console.log("User saved to Firestore");
+            } else {
+              console.log("User already exists in Firestore");
+            }
+          } catch (firestoreError) {
+            console.error("Firestore error:", firestoreError);
+          }
+        };
+
+        saveUserToFirestore();
       } else {
         console.log("No user authenticated");
       }
@@ -89,7 +93,7 @@ const Home = (props) => {
 
       {/* Header */}
       <header className="home-header">
-        <div className="home-logo">NEO</div>
+        <img alt="Logo" src="/external/Logo_negro_NEO_header.svg" className="home-logo" />
         <button
           onClick={handleGoogleLogin}
           className="home-login-button"

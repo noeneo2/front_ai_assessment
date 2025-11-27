@@ -8,7 +8,7 @@ import './landing.css';
 const Landing = (props) => {
   const { setFile, setFileName } = useContext(ReportContext);
   const navigate = useNavigate();
-  
+
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
@@ -32,10 +32,10 @@ const Landing = (props) => {
       <Helmet>
         <title>Subir Excel - Madurez Organizacional Gen AI</title>
       </Helmet>
-      
-      <input 
-        type="file" 
-        ref={fileInputRef} 
+
+      <input
+        type="file"
+        ref={fileInputRef}
         onChange={handleFileChange}
         style={{ display: 'none' }}
         accept=".xlsx, .xls"
@@ -51,21 +51,21 @@ const Landing = (props) => {
               alt="Logo Neo"
             />
           </header>
-          
+
 
           <main className="landing-main-content">
             <div className="landing-upload-module">
               <div className="landing-title">
                 <span className="landing-text1">
-                  Transforma tu excel en un dashboard de Madurez Organizacional en Gen AI
+                  Actualiza tu proyecto
                 </span>
               </div>
-              
-              <div className="landing-upload" onClick={handleUploadAreaClick} style={{cursor: 'pointer'}}>
-                
+
+              <div className="landing-upload" onClick={handleUploadAreaClick} style={{ cursor: 'pointer' }}>
+
                 <div className="landing-frame17">
                   <div className="landing-group3">
-                    <img alt="VectorI281" src="/external/vectori281-d2v4.svg" className="landing-vector001"/>
+                    <img alt="VectorI281" src="/external/vectori281-d2v4.svg" className="landing-vector001" />
                   </div>
                   <div className="landing-frame16">
                     <span className="landing-text2">
@@ -82,13 +82,13 @@ const Landing = (props) => {
               </div>
             </div>
           </main>
-          
+
 
           <footer className="landing-footer">
             <img
-            className="landing-footer-logo"
-            src="/external/Logo_negro_NEO_footer.svg"
-            alt="Logo Neo"
+              className="landing-footer-logo"
+              src="/external/Logo_negro_NEO_footer.svg"
+              alt="Logo Neo"
             />
           </footer>
 
