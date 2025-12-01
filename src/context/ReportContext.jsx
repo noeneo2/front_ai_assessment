@@ -7,6 +7,7 @@ export const ReportProvider = ({ children }) => {
   const [fileName, setFileName] = useState('');
   const [projectName, setProjectName] = useState('');
   const [companyName, setCompanyName] = useState(''); // Nuevo estado
+  const [companySector, setCompanySector] = useState('');
   const [reportData, setReportData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -20,6 +21,8 @@ export const ReportProvider = ({ children }) => {
     setProjectName,
     companyName,
     setCompanyName,
+    companySector,
+    setCompanySector,
     reportData,
     setReportData,
     isLoading,

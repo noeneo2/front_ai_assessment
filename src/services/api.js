@@ -10,9 +10,10 @@ class APIService {
      * Upload and process an Excel assessment file
      * @param {File} file - Excel file
      * @param {string} companyName - Company name
+     * @param {string} companySector - Company sector
      * @returns {Promise<Object>} Assessment result
      */
-    async uploadAssessment(file, companyName) {
+    async uploadAssessment(file, companyName, companySector) {
         try {
             // Get current user
             const user = auth.currentUser;
@@ -24,6 +25,7 @@ class APIService {
             const formData = new FormData();
             formData.append('file', file);
             formData.append('company_name', companyName);
+            formData.append('company_sector', companySector);
             formData.append('user_id', user.uid);
 
             // Send to backend

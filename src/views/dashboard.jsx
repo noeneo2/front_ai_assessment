@@ -442,11 +442,11 @@ const Dashboard = (props) => {
                       alt="Rectangle4"
                       className={`home-rectangle4 categoria-${categoria_estilo}`}
                       style={{
-                        left: categoria_general === 'Exploración' ? '302px' :
-                          categoria_general === 'Fundamentos' ? '407px' :
-                            categoria_general === 'Pilotaje' ? '687px' :
-                              categoria_general === 'Escalamiento' ? '827px' :
-                                categoria_general === 'Transformación' ? '902px' : '302px'
+                        left: categoria_general === 'Exploración' ? '152px' :
+                          categoria_general === 'Fundamentos' ? '357px' :
+                            categoria_general === 'Pilotaje' ? '537px' :
+                              categoria_general === 'Escalamiento' ? '677px' :
+                                categoria_general === 'Transformación' ? '752px' : '152px'
                       }}
                     />
                     <img src="/external/vector14635-go29.svg" alt="Vector1" className="home-vector1" />
@@ -460,11 +460,11 @@ const Dashboard = (props) => {
                             categoria_general === 'Pilotaje' ? '215px' :
                               categoria_general === 'Escalamiento' ? '125px' :
                                 categoria_general === 'Transformación' ? '40px' : '380px',
-                        left: categoria_general === 'Exploración' ? '325px' :
-                          categoria_general === 'Fundamentos' ? '430px' :
-                            categoria_general === 'Pilotaje' ? '710px' :
-                              categoria_general === 'Escalamiento' ? '850px' :
-                                categoria_general === 'Transformación' ? '925px' : '325px'
+                        left: categoria_general === 'Exploración' ? '175px' :
+                          categoria_general === 'Fundamentos' ? '380px' :
+                            categoria_general === 'Pilotaje' ? '560px' :
+                              categoria_general === 'Escalamiento' ? '700px' :
+                                categoria_general === 'Transformación' ? '775px' : '175px'
                       }}
                     />
                   </div>

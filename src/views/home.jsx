@@ -164,7 +164,7 @@ const Home = (props) => {
         <img alt="Logo" src="/external/Logo_negro_NEO_header.svg" className="home-logo" />
         <button
           onClick={handleGoogleLogin}
-          className="home-login-button"
+          className="px-6 py-2 bg-neoblue text-white rounded-lg text-sm font-semibold hover:bg-neoblue/90 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
           disabled={loading}
         >
           {loading ? 'Autenticando...' : 'Iniciar sesión'}
@@ -172,8 +172,8 @@ const Home = (props) => {
       </header>
 
       {/* Hero Section */}
-      <section className="home-hero">
-        <div className="home-hero-content">
+      <section className="py-20 px-12 bg-white min-h-[60vh] flex justify-center items-center">
+        <div className="text-center max-w-4xl">
           <h1 className="home-hero-title">
             Evalúa tu nivel de<br />madurez digital & Gen AI
           </h1>
@@ -183,13 +183,13 @@ const Home = (props) => {
           </p>
           <button
             onClick={handleGoogleLogin}
-            className="home-cta-button"
+            className="px-10 py-4 bg-neoblue text-white rounded-lg text-base font-semibold hover:bg-neoblue/85 hover:-translate-y-0.5 transition-all shadow-[0_4px_12px_rgba(0,0,51,0.2)] hover:shadow-[0_6px_16px_rgba(0,0,51,0.3)] disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
             disabled={loading}
           >
             {loading ? 'Autenticando...' : 'Iniciar evaluación'}
           </button>
           {error && (
-            <div className="home-error-message">
+            <div className="mt-5 text-red-600 text-sm">
               {error}
             </div>
           )}
@@ -197,7 +197,7 @@ const Home = (props) => {
       </section>
 
       {/* Features Section */}
-      <section className="home-features">
+      <section className="py-20 px-48 bg-gray-50">
         <div className="home-features-grid">
           {/* Left side - Platform description */}
           <div className="home-feature-main">
@@ -261,8 +261,8 @@ const Home = (props) => {
       </section>
 
       {/* Dimensions Section */}
-      <section className="home-dimensions">
-        <div className="home-dimensions-content">
+      <section className="py-20 px-48 bg-[#f0f2f5]">
+        <div className="max-w-4xl mx-auto text-center">
           <h2 className="home-dimensions-title">Dimensiones evaluadas</h2>
           <p className="home-dimensions-subtitle">
             Un análisis 360° de tu capacidad de IA y digital.
@@ -281,8 +281,8 @@ const Home = (props) => {
         </div>
       </section>
       {/* Process Steps Section */}
-      <section className="home-process">
-        <div className="home-process-content">
+      <section className="py-20 px-48 bg-white">
+        <div className="max-w-6xl mx-auto text-center">
           <h2 className="home-process-title">Un proceso simple para un diagnóstico completo</h2>
           <p className="home-process-subtitle">
             Sigue estos pasos para obtener tu análisis de madurez de IA.
@@ -370,7 +370,7 @@ const Home = (props) => {
           </h2>
           <button
             onClick={handleGoogleLogin}
-            className="home-cta-button"
+            className="px-10 py-4 bg-neoblue text-white rounded-lg text-base font-semibold hover:bg-neoblue/85 hover:-translate-y-0.5 transition-all shadow-[0_4px_12px_rgba(0,0,51,0.2)] hover:shadow-[0_6px_16px_rgba(0,0,51,0.3)] disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
             disabled={loading}
           >
             {loading ? 'Autenticando...' : 'Subir archivo y obtener diagnóstico'}

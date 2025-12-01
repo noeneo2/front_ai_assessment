@@ -7,7 +7,7 @@ import APIService from '../services/api';
 import './subiendo.css';
 
 const Subiendo = (props) => {
-  const { fileName, file, companyName, setReportData } = useContext(ReportContext);
+  const { fileName, file, companyName, companySector, setReportData } = useContext(ReportContext);
   const navigate = useNavigate();
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(null);
@@ -25,7 +25,7 @@ const Subiendo = (props) => {
 
       try {
         console.log('Uploading file to backend...');
-        const result = await APIService.uploadAssessment(file, companyName);
+        const result = await APIService.uploadAssessment(file, companyName, companySector);
         console.log('Upload successful:', result);
 
         // Store project_id in context for later use

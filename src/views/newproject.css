@@ -159,23 +159,6 @@
   text-align: left;
   font-family: PT Serif;
   font-weight: 600;
-  line-height: normal;
-  font-stretch: normal;
-  text-decoration: none;
-  margin-bottom: 8px;
-}
-
-.newproject-input-container {
-  width: 100%;
-  border: 2px solid rgba(203, 208, 220, 1);
-  border-radius: 8px;
-  padding: 12px;
-  box-sizing: border-box;
-}
-
-.newproject-project-name-input {
-  width: 100%;
-  border: none;
   outline: none;
   font-size: 16px;
   font-family: Montserrat;
@@ -431,6 +414,37 @@
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
+}
+
+/* Contenedor para la fila de inputs */
+.newproject-input-row {
+  display: flex;
+  flex-direction: row;
+  /* Alineación horizontal */
+  width: 100%;
+  gap: 16px;
+  /* Espacio entre los dos campos */
+}
+
+/* Estilo para cada caja de input (Nombre y Sector) */
+.newproject-input-container {
+  flex: 1;
+  /* Hace que ambos ocupen el mismo ancho proporcionalmente */
+  border: 2px solid rgba(203, 208, 220, 1);
+  border-radius: 8px;
+  border-style: dashed;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+/* Asegurar que el input y el select dentro ocupen todo el espacio de su caja */
+.newproject-project-name-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-family: Montserrat;
+  color: var(--dl-color-default-gris);
 }
 
 /*

@@ -13,7 +13,7 @@ class FirestoreService:
         """Initialize Firestore service"""
         self.db = FirebaseConfig.get_db()
     
-    def save_assessment(self, user_id: str, company_name: str, assessment_data: dict) -> str:
+    def save_assessment(self, user_id: str, company_name: str, company_sector: str, assessment_data: dict) -> str:
         """
         Save assessment to Firestore
         
@@ -49,7 +49,8 @@ class FirestoreService:
                     'date': assessment_data['assessment_date'],
                     'created_at': datetime.now(),
                     'user_id': user_id,
-                    'company_name': company_name
+                    'company_name': company_name,
+                    'company_sector': company_sector
                 },
                 'scores': {
                     'puntaje_general': assessment_data['puntaje_general'],

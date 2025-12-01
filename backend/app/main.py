@@ -20,9 +20,15 @@ app = FastAPI(
 )
 
 # Configure CORS
+origins = [
+    "http://localhost:3000",
+    "https://ai-assessment-7e545.web.app",
+    settings.FRONTEND_URL
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_URL],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -48,6 +54,7 @@ async def root():
 async def upload_assessment(
     file: UploadFile = File(...),
     company_name: str = Form(...),
+    company_sector: str = Form("Seguros"),
     user_id: str = Form(...)
 ):
     """
@@ -62,7 +69,7 @@ async def upload_assessment(
         Assessment results with scores and recommendations
     """
     try:
-        logger.info(f"Processing assessment for company: {company_name}, user: {user_id}")
+        logger.info(f"Processing assessment for company: {company_name}, sector: {company_sector}, user: {user_id}")
         
         # Validate file
         if not file.filename.endswith(('.xlsx', '.xls')):
@@ -78,7 +85,8 @@ async def upload_assessment(
         # Generate recommendations with AI
         logger.info("Generating recommendations with AI...")
         recommendations = await ai_service.generate_recommendations(
-            assessment_data['puntajes_areas']
+            assessment_data['puntajes_areas'],
+            company_sector
         )
         
         # Add recommendations to assessment data
@@ -89,6 +97,7 @@ async def upload_assessment(
         project_id = firestore_service.save_assessment(
             user_id=user_id,
             company_name=company_name,
+            company_sector=company_sector,
             assessment_data=assessment_data
         )
         

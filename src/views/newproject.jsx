@@ -5,9 +5,18 @@ import { ReportContext } from '../context/ReportContext';
 import './newproject.css';
 
 const NewProject = (props) => {
-  const { setFile, setFileName, companyName, setCompanyName } = useContext(ReportContext);
+  const { setFile, setFileName, companyName, setCompanyName, companySector, setCompanySector } = useContext(ReportContext);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+
+  const SECTORS = [
+    "Seguros", "Banca", "Finanzas", "Salud", "Retail", "Tecnología",
+    "Telecomunicaciones", "Energía", "Minería", "Construcción", "Transporte",
+    "Logística", "Farmacéutico", "Alimentación", "Moda y Textiles",
+    "Government / Sector público", "Consultoría", "Legal / Servicios jurídicos",
+    "Medios de comunicación", "Publicidad y marketing", "Manufactura",
+    "Agroindustria", "Inmobiliario", "Educación", "Turismo"
+  ];
 
   const handleFileChange = async (event) => {
     const selectedFile = event.target.files[0];
@@ -17,6 +26,11 @@ const NewProject = (props) => {
 
     if (!companyName.trim()) {
       alert("Por favor, ingresa el nombre de la empresa antes de subir el archivo.");
+      return;
+    }
+
+    if (!companySector) {
+      alert("Por favor, selecciona el sector de la empresa antes de subir el archivo.");
       return;
     }
 
@@ -34,6 +48,10 @@ const NewProject = (props) => {
 
   const handleCompanyNameChange = (event) => {
     setCompanyName(event.target.value);
+  };
+
+  const handleSectorChange = (event) => {
+    setCompanySector(event.target.value);
   };
 
   return (
@@ -71,16 +89,33 @@ const NewProject = (props) => {
 
               <div className="newproject-steps-container">
                 <span className="newproject-step-title">
-                  Paso 1: Ingresa el nombre de la empresa
+                  Paso 1: Ingresa los datos de la empresa
                 </span>
-                <div className="newproject-input-container">
-                  <input
-                    type="text"
-                    placeholder="Ingresa el nombre de la empresa"
-                    value={companyName}
-                    onChange={handleCompanyNameChange}
-                    className="newproject-project-name-input"
-                  />
+                <div className="newproject-input-row">
+                  <div className="newproject-input-container">
+                    <input
+                      type="text"
+                      placeholder="Nombre de la empresa"
+                      value={companyName}
+                      onChange={handleCompanyNameChange}
+                      className="newproject-project-name-input"
+                    />
+                  </div>
+                  <div className="newproject-input-container">
+                    <select
+                      value={companySector}
+                      onChange={handleSectorChange}
+                      className="newproject-project-name-input"
+                      style={{ backgroundColor: 'transparent' }}
+                    >
+                      <option value="" disabled>Selecciona el sector</option>
+                      {SECTORS.map((sector) => (
+                        <option key={sector} value={sector}>
+                          {sector}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
                 <span className="newproject-step-title">
                   Paso 2: Subir el archivo de evaluación
