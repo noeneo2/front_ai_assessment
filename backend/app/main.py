@@ -1,12 +1,14 @@
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
+from datetime import datetime
 import logging
 
 from app.config.settings import settings
 from app.services.excel_processor import ExcelProcessor
 from app.services.ai_service import AIService
 from app.services.firestore_service import FirestoreService
+from app.services.pdf_service import PDFService
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -38,6 +40,7 @@ app.add_middleware(
 excel_processor = ExcelProcessor()
 ai_service = AIService()
 firestore_service = FirestoreService()
+pdf_service = PDFService()
 
 
 @app.get("/")
@@ -209,6 +212,78 @@ async def delete_company(company_name: str, user_id: str):
         
     except Exception as e:
         logger.error(f"Error deleting company: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/assessment/{project_id}/download-pdf")
+async def download_assessment_pdf(project_id: str):
+    """
+    Generate and download PDF report for an assessment
+    
+    Args:
+        project_id: Assessment project ID
+    
+    Returns:
+        PDF file as streaming response
+    """
+    try:
+        logger.info(f"Generating PDF for project: {project_id}")
+        
+        # Get assessment data
+        assessment = firestore_service.get_assessment(project_id)
+        
+        if not assessment:
+            raise HTTPException(status_code=404, detail="Assessment not found")
+        
+        # Extract company name
+        company_name = assessment.get('company_name', 'Company')
+        
+        # Generate PDF
+        pdf_buffer = pdf_service.generate_assessment_pdf(assessment, company_name)
+        
+        # Create filename
+        date_str = assessment.get('assessment_date', datetime.now().strftime('%Y-%m-%d'))
+        filename = f"{company_name.replace(' ', '_')}_Assessment_{date_str}.pdf"
+        
+        logger.info(f"PDF generated successfully for project: {project_id}")
+        
+        # Return as streaming response
+        return StreamingResponse(
+            pdf_buffer,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename={filename}"
+            }
+        )
+        
+    except Exception as e:
+        logger.error(f"Error generating PDF: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/public/assessment/{share_token}")
+async def get_public_assessment(share_token: str):
+    """
+    Get assessment data by public share token (no authentication required)
+    
+    Args:
+        share_token: Public share token
+    
+    Returns:
+        Assessment data
+    """
+    try:
+        logger.info(f"Fetching public assessment for token: {share_token}")
+        
+        assessment = firestore_service.get_assessment_by_token(share_token)
+        
+        if not assessment:
+            raise HTTPException(status_code=404, detail="Assessment not found")
+        
+        return assessment
+        
+    except Exception as e:
+        logger.error(f"Error retrieving public assessment: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

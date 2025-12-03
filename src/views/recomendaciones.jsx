@@ -34,6 +34,7 @@ const Recomendaciones = (props) => {
   const [loadingAssessments, setLoadingAssessments] = useState(false);
   const [currentAssessmentId, setCurrentAssessmentId] = useState(null);
   const [showRadarChart, setShowRadarChart] = useState(false);
+  const [downloadingPDF, setDownloadingPDF] = useState(false);
 
   useEffect(() => {
     if (!reportData) {
@@ -85,6 +86,23 @@ const Recomendaciones = (props) => {
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
       alert('Error al cerrar sesión');
+    }
+  };
+
+  const handleDownloadPDF = async () => {
+    if (!reportData || !reportData.project_id) {
+      alert('No hay datos de evaluación disponibles');
+      return;
+    }
+
+    try {
+      setDownloadingPDF(true);
+      await APIService.downloadAssessmentPDF(reportData.project_id, companyName);
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+      alert('Error al descargar el PDF. Por favor, intenta de nuevo.');
+    } finally {
+      setDownloadingPDF(false);
     }
   };
 
@@ -261,14 +279,12 @@ const Recomendaciones = (props) => {
                   </div>
 
 
-                  <div className="recom-frame15">
-                    <img
-                      src="/external/icondownload4611-c77h.svg"
-                      alt="Icondownload4611"
-                      className="recom-icondownload"
-                    />
-                    <span className="recom-text12">Descargar PDF</span>
+                  <div className="recom-frame15" onClick={handleDownloadPDF} style={{ cursor: downloadingPDF ? 'wait' : 'pointer', opacity: downloadingPDF ? 0.6 : 1 }}>
+                    <img src="/external/icondownload4611-c77h.svg" alt="Icondownload4611" className="recom-icondownload" />
+                    <span className="recom-text12">{downloadingPDF ? 'Generando PDF...' : 'Descargar PDF'}</span>
                   </div>
+
+
                 </div>
 
 

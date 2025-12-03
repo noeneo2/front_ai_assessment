@@ -18,24 +18,32 @@ import NotFound from './views/not-found';
 import ProjectPage from './views/projectpage';
 import NewProject from './views/newproject';
 import Home from './views/home';
+import SharedAssessment from './views/shared-assessment';
 
 const App = () => {
   return (
     <Router>
-      {/* Wrap the entire app with the ReportProvider */}
-      <ReportProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/landing" element={<Landing />} />
-          <Route path="/subiendo" element={<Subiendo />} />
-          <Route path="/cargando" element={<Cargando />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/recomendaciones" element={<Recom />} />
-          <Route path="/projectpage" element={<ProjectPage />} />
-          <Route path="/newproject" element={<NewProject />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </ReportProvider>
+      <Routes>
+        {/* Public route - no authentication required */}
+        <Route path="/share/:token" element={<SharedAssessment />} />
+
+        {/* Authenticated routes wrapped with ReportProvider */}
+        <Route path="/*" element={
+          <ReportProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/landing" element={<Landing />} />
+              <Route path="/subiendo" element={<Subiendo />} />
+              <Route path="/cargando" element={<Cargando />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/recomendaciones" element={<Recom />} />
+              <Route path="/projectpage" element={<ProjectPage />} />
+              <Route path="/newproject" element={<NewProject />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </ReportProvider>
+        } />
+      </Routes>
     </Router>
   );
 };

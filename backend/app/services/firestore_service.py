@@ -29,8 +29,9 @@ class FirestoreService:
             Assessment ID (project_id)
         """
         try:
-            # Generate unique assessment ID
+            # Generate unique assessment ID and share token
             assessment_id = str(uuid.uuid4())
+            share_token = str(uuid.uuid4())
             
             # Reference to assessment document
             assessment_ref = (
@@ -46,6 +47,7 @@ class FirestoreService:
             data = {
                 'metadata': {
                     'assessment_id': assessment_id,
+                    'share_token': share_token,
                     'date': assessment_data['assessment_date'],
                     'created_at': datetime.now(),
                     'user_id': user_id,
@@ -234,4 +236,38 @@ class FirestoreService:
             
         except Exception as e:
             logger.error(f"Error deleting company: {str(e)}")
+            raise
+    
+    def get_assessment_by_token(self, share_token: str) -> dict:
+        """
+        Get assessment by public share token (no authentication required)
+        
+        Args:
+            share_token: Public share token
+        
+        Returns:
+            Assessment data or None
+        """
+        try:
+            # Query global assessments collection for share_token
+            assessments_ref = self.db.collection('assessments')
+            query = assessments_ref.where('metadata.share_token', '==', share_token).limit(1)
+            
+            results = list(query.stream())
+            
+            if results:
+                assessment_doc = results[0]
+                data = assessment_doc.to_dict()
+                return {
+                    'project_id': assessment_doc.id,
+                    **data.get('metadata', {}),
+                    **data.get('scores', {}),
+                    'recommendations': data.get('recommendations', [])
+                }
+            
+            logger.warning(f"Assessment not found for share_token: {share_token}")
+            return None
+            
+        except Exception as e:
+            logger.error(f"Error retrieving assessment by token: {str(e)}")
             raise

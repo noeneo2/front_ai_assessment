@@ -140,6 +140,66 @@ class APIService {
             throw error;
         }
     }
+
+    /**
+     * Download PDF report for an assessment
+     * @param {string} projectId - Assessment project ID
+     * @param {string} companyName - Company name for filename
+     * @returns {Promise<void>}
+     */
+    async downloadAssessmentPDF(projectId, companyName) {
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/assessment/${projectId}/download-pdf`
+            );
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Error generating PDF');
+            }
+
+            // Get the blob from response
+            const blob = await response.blob();
+
+            // Create a temporary URL for the blob
+            const url = window.URL.createObjectURL(blob);
+
+            // Create a temporary anchor element and trigger download
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${companyName.replace(/\s+/g, '_')}_Assessment_${new Date().toISOString().split('T')[0]}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+
+            // Cleanup
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } catch (error) {
+            console.error('Error downloading PDF:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Get assessment by public share token (no authentication required)
+     * @param {string} shareToken - Public share token
+     * @returns {Promise<Object>} Assessment data
+     */
+    async getPublicAssessment(shareToken) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/public/assessment/${shareToken}`);
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Error fetching public assessment');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching public assessment:', error);
+            throw error;
+        }
+    }
 }
 
 export default new APIService();
